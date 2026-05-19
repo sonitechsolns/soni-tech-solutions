@@ -471,7 +471,7 @@
                 <!-- Email for Response -->
                 <div>
                     <label class="block text-xs uppercase font-bold text-[#2CC7FF] mb-2">Your Email</label>
-                    <input type="email" id="ticket-email" required placeholder="Where should we reply?" class="w-full bg-black border-4 border-black p-4 text-white focus:border-[#2CC7FF] outline-none rounded-none">
+                    <input type="email" id="ticket-email" required placeholder="Where should we reply?" class="w-full bg-black border-4 border-black p-4 text-white focus:border-[#2CC7FF] outline-none rounded-none"></textarea>
                 </div>
 
                 <!-- Submission status feedback text -->
@@ -969,6 +969,7 @@
         // ANNOUNCEMENTS BOARD CONTROLLER
         // ----------------------------------------------------
         const streamLiveAnnouncements = () => {
+            if (!currentUser) return;
             const announcementsCol = collection(db, 'artifacts', appId, 'public', 'data', 'announcements');
             
             onSnapshot(announcementsCol, (snapshot) => {
