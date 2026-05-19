@@ -15,11 +15,10 @@
 
     <style>
         :root {
-            --cyan-brand: #2CC7FF; /* Exact cyan from your uploaded file */
+            --cyan-brand: #2CC7FF;
             --matte-black: #0B0B0C;
             --neon-pink: #FF007F;
             --neon-orange: #FF5E00;
-            --scroll-pos: 0px;
         }
 
         body {
@@ -29,12 +28,10 @@
             overflow-x: hidden;
         }
 
-        /* Classic Serif Font Style to match your uploaded file */
         .classic-serif {
             font-family: 'Cormorant Garamond', serif;
         }
 
-        /* Overlapping STS Lettering Styling with Precise Outline */
         .sts-logo-container {
             position: relative;
             display: flex;
@@ -53,12 +50,11 @@
             position: absolute;
             line-height: 0.8;
             user-select: none;
-            /* Dynamic responsive font sizing to solve iPhone scaling bugs */
             font-size: clamp(120px, 20vw, 200px);
             transition: transform 0.05s ease-out;
         }
 
-        /* Replicating the overlapping structure of your STS.png on initial load */
+        /* Fallbacks to prevent stacking on load before JS executes */
         .letter-s1 {
             transform: translate(-95px, 0px);
             z-index: 10;
@@ -74,7 +70,6 @@
             z-index: 30;
         }
 
-        /* Matte Shadows & Brutalist Borders (Strictly non-glass, solid elements) */
         .matte-card {
             background-color: #121214;
             border: 4px solid #000000;
@@ -101,7 +96,6 @@
             transition: transform 0.05s ease-out, box-shadow 0.05s ease-out;
         }
 
-        /* Solid custom buttons */
         .brutalist-btn {
             background-color: #000000;
             border: 3px solid #000000;
@@ -120,7 +114,6 @@
             box-shadow: 2px 2px 0px var(--cyan-brand);
         }
 
-        /* Custom scrollbar to match matte aesthetic */
         ::-webkit-scrollbar {
             width: 12px;
         }
@@ -136,10 +129,13 @@
             background: var(--cyan-brand);
         }
 
-        /* Immersive interactive backgrounds */
         .parallax-bg {
             will-change: transform;
             transition: transform 0.05s ease-out;
+        }
+        
+        .will-change-transform {
+            will-change: transform;
         }
     </style>
 </head>
@@ -164,24 +160,19 @@
     <!-- MAIN PORTAL LAYER VIEW -->
     <div id="portal-view">
         
-        <!-- Parallax Hero Container (Exactly your uploaded file's design as the core canvas) -->
+        <!-- Parallax Hero Container -->
         <header class="relative w-screen h-screen flex flex-col justify-center items-center overflow-hidden pt-16 z-10 bg-[#2CC7FF] transition-colors duration-500" id="hero-canvas">
             
-            <!-- Background Layer (Parallax lines/dots) -->
             <div class="absolute inset-0 opacity-15 pointer-events-none parallax-bg" id="hero-bg-layer" style="background-image: radial-gradient(#000 2px, transparent 2px); background-size: 32px 32px;"></div>
 
-            <!-- Float Elements (Foreground parallax shards) -->
             <div class="absolute top-[20%] left-[10%] w-16 h-16 bg-black rotate-12 parallax-bg pointer-events-none" id="shard-1"></div>
             <div class="absolute bottom-[30%] right-[15%] w-24 h-24 bg-transparent border-4 border-black -rotate-45 parallax-bg pointer-events-none" id="shard-2"></div>
             <div class="absolute top-[40%] right-[12%] w-12 h-12 bg-black rounded-full parallax-bg pointer-events-none" id="shard-3"></div>
 
-            <!-- The STS Master Outline (Direct replication of your logo alignment) -->
+            <!-- The STS Master Outline -->
             <div class="sts-logo-container scale-110 md:scale-125 select-none transition-transform duration-300" id="logo-parallax-parent">
-                <!-- Left 'S' -->
                 <span class="sts-letter letter-s1" id="s1-letter">S</span>
-                <!-- Middle 'T' -->
                 <span class="sts-letter letter-t" id="t-letter">T</span>
-                <!-- Right 'S' -->
                 <span class="sts-letter letter-s2" id="s2-letter">S</span>
             </div>
 
@@ -203,7 +194,6 @@
                 </div>
             </div>
 
-            <!-- Interactive Playground Controls on Hero -->
             <div class="absolute bottom-12 flex flex-col items-center gap-3 z-30">
                 <span class="text-xs uppercase font-bold text-black tracking-widest animate-bounce">Scroll down to Explore</span>
                 <div class="w-1 h-12 bg-black rounded-full relative overflow-hidden">
@@ -212,16 +202,14 @@
             </div>
         </header>
 
-        <!-- Project Matrix Section (With Active Parallax Background Particles & Asymmetrical Scrolling) -->
+        <!-- Project Matrix Section -->
         <section id="projects" class="relative z-20 py-24 px-6 md:px-12 bg-[#0B0B0C] border-t-8 border-black overflow-hidden">
             
-            <!-- Secondary background parallax shards -->
             <div class="absolute top-[10%] left-[5%] w-32 h-32 border-4 border-zinc-900 rotate-12 pointer-events-none parallax-bg" id="projects-shard-1"></div>
             <div class="absolute bottom-[15%] right-[8%] w-44 h-44 bg-zinc-900/40 -rotate-12 pointer-events-none parallax-bg" id="projects-shard-2"></div>
 
-            <!-- Big Matte Section Title (Drifts Horizontally on scroll!) -->
             <div class="max-w-7xl mx-auto mb-16 relative z-10">
-                <div id="projects-header-drift" class="inline-block bg-[#2CC7FF] text-black border-4 border-black px-6 py-3 font-black text-2xl uppercase tracking-wider mb-4 transform shadow-[4px_4px_0px_#000] transition-transform duration-75 ease-out">
+                <div id="projects-header-drift" class="inline-block bg-[#2CC7FF] text-black border-4 border-black px-6 py-3 font-black text-2xl uppercase tracking-wider mb-4 transform shadow-[4px_4px_0px_#000] transition-transform duration-75 ease-out will-change-transform">
                     ACTIVE ENTERPRISES
                 </div>
                 <h2 class="text-4xl md:text-6xl font-black uppercase tracking-tight text-white">
@@ -232,11 +220,10 @@
                 </p>
             </div>
 
-            <!-- Projects Grid with High-fidelity Asymmetrical Scroll depth -->
             <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10">
                 
-                <!-- PROJECT 1: SNAPNEXUS (Asymmetrically drifts Upward significantly faster on scroll) -->
-                <div id="card-snapnexus" class="matte-card-cyan rounded-none p-8 flex flex-col justify-between group will-change-transform">
+                <!-- PROJECT 1: SNAPNEXUS -->
+                <div id="card-snapnexus" class="matte-card-cyan rounded-none p-8 flex flex-col justify-between group will-change-transform transition-transform duration-75 ease-out">
                     <div>
                         <div class="flex justify-between items-start mb-6">
                             <span class="text-xs font-mono font-bold bg-[#2CC7FF] text-black px-3 py-1 uppercase tracking-widest">LIVE EVENT PLATFORM</span>
@@ -270,8 +257,8 @@
                     </div>
                 </div>
 
-                <!-- PROJECT 2: SPARSHIKA (Asymmetrically drifts Downward/slower on scroll) -->
-                <div id="card-sparshika" class="matte-card-pink rounded-none p-8 flex flex-col justify-between group will-change-transform">
+                <!-- PROJECT 2: SPARSHIKA -->
+                <div id="card-sparshika" class="matte-card-pink rounded-none p-8 flex flex-col justify-between group will-change-transform transition-transform duration-75 ease-out">
                     <div>
                         <div class="flex justify-between items-start mb-6">
                             <span class="text-xs font-mono font-bold bg-[#FF007F] text-white px-3 py-1 uppercase tracking-widest">UTILITY SYSTEM</span>
@@ -308,7 +295,7 @@
             </div>
         </section>
 
-        <!-- Immersive Interactive Customization Station (Also reacts dynamically to scroll!) -->
+        <!-- Immersive Interactive Customization Station -->
         <section class="py-16 px-6 bg-[#121214] border-t-8 border-b-8 border-black overflow-hidden relative">
             <div class="absolute top-[30%] right-[5%] w-72 h-72 bg-[#FF007F]/10 rounded-full blur-2xl pointer-events-none"></div>
             <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12 relative z-10">
@@ -327,7 +314,6 @@
                         <button onclick="changeAccent('#FFD700', 'Gold')" class="w-12 h-12 rounded-none bg-[#FFD700] border-4 border-black active:translate-y-1 transition-transform" title="Cyber Gold"></button>
                     </div>
                 </div>
-                <!-- The Card itself tilts & offsets dramatically on scroll -->
                 <div class="w-full md:w-96 p-6 bg-black border-4 border-black shadow-[8px_8px_0px_#2CC7FF] relative transition-transform duration-75 ease-out will-change-transform" id="sandbox-card">
                     <div class="absolute -top-4 left-4 bg-[#2CC7FF] text-black text-xs font-mono font-bold px-2 py-1 border border-black" id="accent-badge">
                         ACCENT: CYAN
@@ -349,10 +335,9 @@
             </div>
         </section>
 
-        <!-- Announcements section (Drifts and scales cards elegantly on scroll with amplified offsets) -->
+        <!-- Announcements section -->
         <section id="announcements" class="py-24 px-6 md:px-12 bg-black overflow-hidden relative">
             
-            <!-- Background absolute floating particles -->
             <div class="absolute top-[20%] right-[10%] w-24 h-24 bg-[#2CC7FF]/15 rotate-45 pointer-events-none parallax-bg" id="announcements-shard-1"></div>
             <div class="absolute bottom-[20%] left-[8%] w-20 h-20 border-2 border-dashed border-[#FF007F]/50 rotate-12 pointer-events-none parallax-bg" id="announcements-shard-2"></div>
 
@@ -360,8 +345,7 @@
                 
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
                     <div>
-                        <!-- Horizontal Text Drift -->
-                        <span id="announcements-header-drift" class="inline-block text-xs font-mono font-bold bg-[#FF007F] text-white px-3 py-1 uppercase tracking-widest transition-transform duration-75 ease-out">TRANSMISSIONS</span>
+                        <span id="announcements-header-drift" class="inline-block text-xs font-mono font-bold bg-[#FF007F] text-white px-3 py-1 uppercase tracking-widest transition-transform duration-75 ease-out will-change-transform">TRANSMISSIONS</span>
                         <h2 class="text-4xl font-black uppercase mt-2 tracking-tight text-white">
                             STS ANNOUNCEMENTS
                         </h2>
@@ -371,9 +355,7 @@
                     </button>
                 </div>
 
-                <!-- Announcements Board -->
                 <div class="space-y-6" id="announcements-container">
-                    <!-- Static Fallback/Placeholder while loading from cloud Firestore database -->
                     <div id="loading-announcements" class="text-zinc-500 font-mono text-sm py-4">
                         <i class="fa-solid fa-circle-notch animate-spin mr-2"></i> Synchronizing with Soni Tech Solutions Cloud Database...
                     </div>
@@ -382,7 +364,7 @@
             </div>
         </section>
 
-        <!-- CENTRALIZED RESOLUTION GATEWAY SECTION (Dynamic Contrast Opposing Button sits here) -->
+        <!-- CENTRALIZED RESOLUTION GATEWAY SECTION -->
         <section class="py-20 px-6 bg-[#0E0E10] border-t-8 border-black text-center relative overflow-hidden">
             <div class="max-w-3xl mx-auto relative z-10">
                 <span class="text-xs font-mono font-bold uppercase tracking-widest text-[#FF007F] mb-3 block">SYSTEM FRICTION MONITOR</span>
@@ -390,7 +372,6 @@
                 <p class="text-zinc-400 text-sm md:text-base max-w-xl mx-auto mb-8 leading-relaxed">
                     Report any layout breaks, functional blockages, or billing friction encountered inside Soni Tech Solutions, SnapNexus, or Sparshika.
                 </p>
-                <!-- DYNAMIC OPPOSING COLOR BUTTON -->
                 <button id="launch-ticket-btn" onclick="navigateToView('support')" class="inline-block font-black text-base md:text-lg uppercase tracking-wider py-4 px-10 border-4 border-black transition-all duration-300" style="background-color: var(--neon-pink); color: #FFFFFF; box-shadow: 8px 8px 0px #000000;">
                     CONNECT & RAISE AN ISSUE <i class="fa-solid fa-ticket ml-2"></i>
                 </button>
@@ -402,13 +383,11 @@
     <!-- DEDICATED SUPPORT & TICKETING TERMINAL LAYER VIEW -->
     <div id="support-view" class="hidden min-h-screen bg-[#0B0B0C] pt-32 pb-24 px-6 relative overflow-hidden">
         
-        <!-- Background absolute floating particles -->
         <div class="absolute top-[10%] left-[5%] w-32 h-32 border-4 border-zinc-900/60 rotate-45 pointer-events-none"></div>
         <div class="absolute bottom-[10%] right-[5%] w-48 h-48 bg-[#2CC7FF]/5 rounded-full blur-3xl pointer-events-none"></div>
 
         <div class="max-w-4xl mx-auto relative z-10">
             
-            <!-- Elegant Go-Back Portal Terminal Anchor Header -->
             <div class="flex justify-between items-center mb-12 border-b-4 border-black pb-6">
                 <div class="flex items-center gap-3">
                     <span class="classic-serif text-4xl font-black tracking-tighter text-white select-none">STS</span>
@@ -429,9 +408,8 @@
                 Centralized ticket delivery system. Select your platform target, describe the friction, and attach a localized screenshot.
             </p>
 
-            <form id="support-ticket-form" onsubmit="handleNewTicket(event)" class="space-y-6">
+            <form id="support-ticket-form" onsubmit="window.handleNewTicket(event)" class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Product Selection -->
                     <div>
                         <label class="block text-xs uppercase font-bold text-[#2CC7FF] mb-2">Target Product</label>
                         <select id="ticket-product" required class="w-full bg-black border-4 border-black p-4 text-white font-bold appearance-none focus:border-[#2CC7FF] outline-none rounded-none">
@@ -440,7 +418,6 @@
                             <option value="sts-portal">STS PORTAL</option>
                         </select>
                     </div>
-                    <!-- Issue Type -->
                     <div>
                         <label class="block text-xs uppercase font-bold text-[#2CC7FF] mb-2">Issue Type</label>
                         <select id="ticket-type" required class="w-full bg-black border-4 border-black p-4 text-white font-bold appearance-none focus:border-[#2CC7FF] outline-none rounded-none">
@@ -451,33 +428,28 @@
                     </div>
                 </div>
 
-                <!-- Description -->
                 <div>
                     <label class="block text-xs uppercase font-bold text-[#2CC7FF] mb-2">Describe the Friction</label>
                     <textarea id="ticket-desc" required rows="4" placeholder="Be specific. What happened?" class="w-full bg-black border-4 border-black p-4 text-white focus:border-[#2CC7FF] outline-none rounded-none"></textarea>
                 </div>
 
-                <!-- Screenshot Upload -->
                 <div class="matte-card bg-black p-6 border-4 border-dashed border-zinc-800 hover:border-[#2CC7FF] transition-colors relative">
                     <label class="flex flex-col items-center cursor-pointer">
                         <i class="fa-solid fa-cloud-arrow-up text-3xl mb-2 text-zinc-600"></i>
                         <span class="text-xs font-bold uppercase tracking-widest text-zinc-400" id="upload-label">Attach Screenshot</span>
-                        <input type="file" id="ticket-file" accept="image/*" onchange="processScreenshot(event)" class="hidden">
+                        <input type="file" id="ticket-file" accept="image/*" onchange="window.processScreenshot(event)" class="hidden">
                     </label>
-                    <!-- Small preview of uploaded compressed image -->
                     <div id="image-preview-container" class="hidden mt-4 flex flex-col items-center">
                         <img id="image-preview" src="" class="max-h-48 border-2 border-black object-contain shadow-md" />
                         <button type="button" onclick="clearScreenshot()" class="mt-2 text-xs text-[#FF007F] font-bold uppercase tracking-wider hover:underline">Remove Attachment</button>
                     </div>
                 </div>
 
-                <!-- Email for Response -->
                 <div>
                     <label class="block text-xs uppercase font-bold text-[#2CC7FF] mb-2">Your Email</label>
-                    <input type="email" id="ticket-email" required placeholder="Where should we reply?" class="w-full bg-black border-4 border-black p-4 text-white focus:border-[#2CC7FF] outline-none rounded-none"></textarea>
+                    <input type="email" id="ticket-email" required placeholder="Where should we reply?" class="w-full bg-black border-4 border-black p-4 text-white focus:border-[#2CC7FF] outline-none rounded-none">
                 </div>
 
-                <!-- Submission status feedback text -->
                 <div id="ticket-form-status" class="hidden font-mono text-sm px-4 py-3 border-4 border-black font-bold"></div>
 
                 <button type="submit" id="ticket-submit-btn" class="brutalist-btn w-full py-5 text-lg font-black uppercase tracking-widest rounded-none" style="box-shadow: 8px 8px 0px #FFD700">
@@ -514,9 +486,7 @@
             <button onclick="closeDemoModal()" class="absolute top-4 right-4 text-white hover:text-[#2CC7FF] text-2xl">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-            <div id="modal-content">
-                <!-- Dynamic Content injected here -->
-            </div>
+            <div id="modal-content"></div>
         </div>
     </div>
 
@@ -530,7 +500,7 @@
             <span class="text-xs font-mono font-bold bg-[#FF007F] text-white px-2 py-1 uppercase">Transmission Interface</span>
             <h3 class="text-2xl font-black uppercase mt-2 mb-6">Create Announcement</h3>
             
-            <form onsubmit="handleNewAnnouncement(event)" class="space-y-4">
+            <form onsubmit="window.handleNewAnnouncement(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs uppercase font-bold text-zinc-400 mb-1">Title</label>
                     <input type="text" id="ann-title" required class="w-full bg-black border-2 border-zinc-800 text-white p-3 rounded-none focus:outline-none focus:border-[#FF007F]">
@@ -549,16 +519,13 @@
                         <input type="text" id="ann-author" value="STS_CORE" required class="w-full bg-black border-2 border-zinc-800 text-white p-3 rounded-none focus:outline-none focus:border-[#FF007F]">
                     </div>
                 </div>
-                <!-- Security Passcode Protection Form Gate -->
                 <div class="border-t border-zinc-800 pt-4">
                     <label class="block text-xs uppercase font-bold text-[#FF007F] mb-1">Admin Passcode (Access Key)</label>
                     <input type="password" id="ann-passcode" placeholder="••••••••" required class="w-full bg-black border-2 border-zinc-800 text-white p-3 rounded-none focus:outline-none focus:border-[#FF007F]">
-                    <!-- Inline Custom Brutalist Error -->
                     <div id="passcode-error" class="hidden mt-2 bg-[#FF007F] text-white font-mono text-xs px-3 py-2 border-2 border-black font-bold">
                         ACCESS DENIED: INVALID STS SECURITY KEY
                     </div>
                 </div>
-                <!-- Submit broadcast indicator -->
                 <div id="ann-broadcast-status" class="hidden text-xs bg-black text-zinc-400 font-mono p-2 border-2 border-zinc-800 mt-2"></div>
 
                 <button type="submit" class="w-full bg-[#FF007F] text-white font-black py-4 uppercase tracking-wider text-sm border-4 border-black shadow-[4px_4px_0px_#000] active:translate-y-1 hover:shadow-[2px_2px_0px_#000] transition-all">
@@ -568,38 +535,19 @@
         </div>
     </div>
 
-    <!-- Firebase Architecture & Core App Logic -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, doc, setDoc, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // ----------------------------------------------------
-        // FIREBASE SETUP AND INITIALIZATION
-        // ----------------------------------------------------
-        const fallbackConfig = {
-            apiKey: "",
-            authDomain: "sparshika-1c56d.firebaseapp.com",
-            projectId: "sparshika-1c56d",
-            storageBucket: "sparshika-1c56d.appspot.com",
-            messagingSenderId: "1234567890",
-            appId: "1:1234567890:web:abcdef"
-        };
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : fallbackConfig;
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        let currentUser = null;
+    <!-- ======================================================================= -->
+    <!-- SCRIPT 1: STANDARD GLOBAL VISUAL ENGINE (GUARANTEES PARALLAX ON LOAD)   -->
+    <!-- ======================================================================= -->
+    <script>
+        // Global State
+        window.compressedScreenshotBase64 = "";
         let baseGap = 95;
         let logoScale = 125;
-        let compressedScreenshotBase64 = "";
         let currentThemeColor = '#2CC7FF';
         let currentThemeName = 'Cyan';
 
-        // Declare all helper functions first to ensure hosting and correct module-level scoping
+        // UI Functions
         function adjustLogoGap(val) {
             baseGap = parseInt(val);
             const s1 = document.getElementById('s1-letter');
@@ -631,7 +579,6 @@
             adjustLogoScale(125);
         }
 
-        // Complete Accent Color Mapping to its dynamic contrast complement
         function changeAccent(colorCode, name) {
             currentThemeColor = colorCode;
             currentThemeName = name;
@@ -642,11 +589,7 @@
             if (badge) {
                 badge.innerText = `ACCENT: ${name.toUpperCase()}`;
                 badge.style.backgroundColor = colorCode;
-                if(name === 'Pink' || name === 'Orange') {
-                    badge.style.color = '#FFFFFF';
-                } else {
-                    badge.style.color = '#000000';
-                }
+                badge.style.color = (name === 'Pink' || name === 'Orange') ? '#FFFFFF' : '#000000';
             }
 
             const sandboxCard = document.getElementById('sandbox-card');
@@ -658,35 +601,24 @@
             const nav = document.getElementById('main-nav');
             if (nav) nav.style.backgroundColor = colorCode;
 
-            // Recalculate Complementary/Opposing color dynamics for the dedicated Issue Submission Link
             const launchBtn = document.getElementById('launch-ticket-btn');
             const backBtn = document.getElementById('back-to-nexus-btn');
             if (launchBtn) {
                 if (name === 'Cyan') {
-                    // Cyan -> Pink Opposer
                     launchBtn.style.backgroundColor = '#FF007F';
                     launchBtn.style.color = '#FFFFFF';
-                    launchBtn.style.boxShadow = `8px 8px 0px #000000`;
                 } else if (name === 'Pink') {
-                    // Pink -> Cyan Opposer
                     launchBtn.style.backgroundColor = '#2CC7FF';
                     launchBtn.style.color = '#000000';
-                    launchBtn.style.boxShadow = `8px 8px 0px #000000`;
                 } else if (name === 'Orange') {
-                    // Orange -> Cyan Opposer
                     launchBtn.style.backgroundColor = '#2CC7FF';
                     launchBtn.style.color = '#000000';
-                    launchBtn.style.boxShadow = `8px 8px 0px #000000`;
                 } else if (name === 'Gold') {
-                    // Gold -> Pink Opposer
                     launchBtn.style.backgroundColor = '#FF007F';
                     launchBtn.style.color = '#FFFFFF';
-                    launchBtn.style.boxShadow = `8px 8px 0px #000000`;
                 }
             }
-            if (backBtn) {
-                backBtn.style.boxShadow = `4px 4px 0px ${colorCode}`;
-            }
+            if (backBtn) backBtn.style.boxShadow = `4px 4px 0px ${colorCode}`;
         }
 
         function toggleVisualMode() {
@@ -700,7 +632,6 @@
             changeAccent(colors[nextIdx].hex, colors[nextIdx].name);
         }
 
-        // Virtual routing architecture to safely isolate issue portal without making separate file explorer connections
         function navigateToView(viewName) {
             const portalView = document.getElementById('portal-view');
             const supportView = document.getElementById('support-view');
@@ -712,13 +643,12 @@
                 window.location.hash = 'support';
             } else {
                 if (portalView) portalView.classList.remove('hidden');
-                if (supportView) supportView.classList.add('hidden'); // Fixed visual visibility typo here!
+                if (supportView) supportView.classList.add('hidden');
                 window.scrollTo({ top: 0, behavior: 'instant' });
-                // Clean the hash cleanly on exit - wrapped in try/catch to bypass iframe sandboxed restriction errors
                 try {
                     history.pushState("", document.title, window.location.pathname + window.location.search);
                 } catch (e) {
-                    // Handled safely: Do nothing on iframe sandbox error to prevent infinite recursion loop
+                    // Safe bypass for sandboxes
                 }
             }
         }
@@ -755,11 +685,6 @@
                                 <span class="text-white font-mono font-bold">Surat, Ahmedabad</span>
                             </div>
                         </div>
-                        <div class="mt-6">
-                            <p class="text-zinc-400 text-xs leading-relaxed">
-                                Currently capturing continuous user-uploaded photo streams. Live slides updating via websockets seamlessly.
-                            </p>
-                        </div>
                     `;
                 } else if (project === 'sparshika') {
                     modalBox.style.borderColor = 'var(--neon-pink)';
@@ -781,12 +706,7 @@
                                 <span class="text-white font-mono font-bold">41ms</span>
                             </div>
                         </div>
-                        <div class="mt-6">
-                            <p class="text-zinc-400 text-xs leading-relaxed">
-                                Advanced utility repository holding our custom microservices. Protected with modern cryptographic verification.
-                        </p>
-                    </div>
-                `;
+                    `;
                 }
             }
         }
@@ -810,41 +730,217 @@
             if (modal) modal.classList.add('hidden');
         }
 
-        // Bind all helpers safely to the global window context so that HTML event targets can access them
-        window.adjustLogoGap = adjustLogoGap;
-        window.adjustLogoScale = adjustLogoScale;
-        window.resetLogoDimensions = resetLogoDimensions;
-        window.changeAccent = changeAccent;
-        window.toggleVisualMode = toggleVisualMode;
-        window.navigateToView = navigateToView;
-        window.showDemoModal = showDemoModal;
-        window.closeDemoModal = closeDemoModal;
-        window.openAnnouncementModal = openAnnouncementModal;
-        window.closeAnnouncementModal = closeAnnouncementModal;
+        function clearScreenshot() {
+            window.compressedScreenshotBase64 = "";
+            const tFile = document.getElementById('ticket-file');
+            const previewCont = document.getElementById('image-preview-container');
+            const label = document.getElementById('upload-label');
+            if (tFile) tFile.value = "";
+            if (previewCont) previewCont.classList.add('hidden');
+            if (label) label.innerText = "Attach Screenshot";
+        }
 
-        // Sign in anonymously to enable Firestore connections safely
-        const initAuth = async () => {
-            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                await signInWithCustomToken(auth, __initial_auth_token);
+        // Screen Adjustments
+        const updateResponsiveLayout = () => {
+            if (window.innerWidth < 768) {
+                baseGap = window.innerWidth * 0.12; 
+                const gapSlider = document.getElementById('gap-slider');
+                if (gapSlider) gapSlider.value = baseGap;
             } else {
-                await signInAnonymously(auth);
+                baseGap = 95;
+                const gapSlider = document.getElementById('gap-slider');
+                if (gapSlider) gapSlider.value = 95;
+            }
+            adjustLogoGap(baseGap);
+        };
+
+        const checkIncomingHash = () => {
+            if (window.location.hash === '#support') {
+                navigateToView('support');
+            } else {
+                navigateToView('portal');
             }
         };
 
-        initAuth().catch(console.error);
-
-        onAuthStateChanged(auth, (user) => {
-            currentUser = user;
-            if (user) {
-                // Execute database registrations
-                registerVisit();
-                streamLiveAnnouncements();
-            }
+        // Bootstrap visual events
+        window.addEventListener('resize', updateResponsiveLayout);
+        window.addEventListener('hashchange', checkIncomingHash);
+        document.addEventListener('DOMContentLoaded', () => {
+            updateResponsiveLayout();
+            checkIncomingHash();
         });
 
-        // ----------------------------------------------------
-        // VISITS TRACKING CONTROLLER
-        // ----------------------------------------------------
+        // =======================================================================
+        // HIGH PERFORMANCE PARALLAX ENGINE
+        // =======================================================================
+        let ticking = false;
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrollPos = window.pageYOffset;
+                    const windowHeight = window.innerHeight;
+                    const portalView = document.getElementById('portal-view');
+                    
+                    if (portalView && !portalView.classList.contains('hidden')) {
+                        // Hero Layer
+                        const bgLayer = document.getElementById('hero-bg-layer');
+                        if (bgLayer) bgLayer.style.transform = `translateY(${scrollPos * 0.35}px)`;
+
+                        const shard1 = document.getElementById('shard-1');
+                        const shard2 = document.getElementById('shard-2');
+                        const shard3 = document.getElementById('shard-3');
+                        if (shard1) shard1.style.transform = `translateY(${scrollPos * -0.9}px) rotate(${scrollPos * 0.25 + 12}deg)`;
+                        if (shard2) shard2.style.transform = `translateY(${scrollPos * 0.65}px) rotate(${scrollPos * -0.15 - 45}deg)`;
+                        if (shard3) shard3.style.transform = `translateY(${scrollPos * -0.45}px)`;
+
+                        const titleParallax = document.getElementById('title-parallax');
+                        if (titleParallax) {
+                            titleParallax.style.transform = `translateY(${scrollPos * 0.6}px)`;
+                            titleParallax.style.opacity = Math.max(1 - (scrollPos / 300), 0);
+                        }
+
+                        // Logo Drift
+                        const s1 = document.getElementById('s1-letter');
+                        const s2 = document.getElementById('s2-letter');
+                        const t = document.getElementById('t-letter');
+                        const offsetMultiplier = scrollPos * 0.65;
+                        
+                        if (s1) s1.style.transform = `translate(${-baseGap - offsetMultiplier}px, ${scrollPos * 0.15}px)`;
+                        if (s2) s2.style.transform = `translate(${baseGap + offsetMultiplier}px, ${scrollPos * 0.15}px)`;
+                        if (t) t.style.transform = `translate(0px, ${scrollPos * 0.08}px)`;
+
+                        // Projects Section
+                        const projectsSec = document.getElementById('projects');
+                        if (projectsSec) {
+                            const projRect = projectsSec.getBoundingClientRect();
+                            if (projRect.top < windowHeight && projRect.bottom > 0) {
+                                const progress = (windowHeight - projRect.top) / (windowHeight + projRect.height);
+                                const centeredProgress = progress - 0.5;
+
+                                const driftHeader = document.getElementById('projects-header-drift');
+                                const cSnap = document.getElementById('card-snapnexus');
+                                const cSparshika = document.getElementById('card-sparshika');
+                                const pShard1 = document.getElementById('projects-shard-1');
+                                const pShard2 = document.getElementById('projects-shard-2');
+
+                                if (driftHeader) driftHeader.style.transform = `translateX(${centeredProgress * -350}px) rotate(${centeredProgress * -12}deg)`;
+                                if (cSnap) cSnap.style.transform = `translateY(${centeredProgress * -160}px)`;
+                                if (cSparshika) cSparshika.style.transform = `translateY(${centeredProgress * 160}px)`;
+                                if (pShard1) pShard1.style.transform = `translateY(${centeredProgress * -250}px) rotate(${scrollPos * 0.15}deg)`;
+                                if (pShard2) pShard2.style.transform = `translateY(${centeredProgress * 300}px) rotate(${scrollPos * -0.08}deg)`;
+                            }
+                        }
+
+                        // Sandbox Dynamics
+                        const sandboxCard = document.getElementById('sandbox-card');
+                        if (sandboxCard) {
+                            const sandRect = sandboxCard.getBoundingClientRect();
+                            if (sandRect.top < windowHeight && sandRect.bottom > 0) {
+                                const progress = (windowHeight - sandRect.top) / (windowHeight + sandRect.height);
+                                const centeredProgress = progress - 0.5;
+                                sandboxCard.style.transform = `translateY(${centeredProgress * -140}px) rotate(${centeredProgress * 22}deg)`;
+                            }
+                        }
+
+                        // Announcements Section
+                        const annSec = document.getElementById('announcements');
+                        if (annSec) {
+                            const annRect = annSec.getBoundingClientRect();
+                            if (annRect.top < windowHeight && annRect.bottom > 0) {
+                                const progress = (windowHeight - annRect.top) / (windowHeight + annRect.height);
+                                const centeredProgress = progress - 0.5;
+
+                                const annDrift = document.getElementById('announcements-header-drift');
+                                const annShard1 = document.getElementById('announcements-shard-1');
+                                const annShard2 = document.getElementById('announcements-shard-2');
+
+                                if (annDrift) annDrift.style.transform = `translateX(${centeredProgress * 320}px) rotate(${centeredProgress * 8}deg)`;
+                                if (annShard1) annShard1.style.transform = `translateY(${centeredProgress * -300}px) rotate(${scrollPos * 0.2}deg)`;
+                                if (annShard2) annShard2.style.transform = `translateY(${centeredProgress * 250}px) rotate(${scrollPos * -0.15}deg)`;
+
+                                const annCards = document.querySelectorAll('.scroll-reactive-card');
+                                annCards.forEach((card, index) => {
+                                    const directionMultiplier = (index % 2 === 0) ? -120 : 120;
+                                    card.style.transform = `translateY(${centeredProgress * directionMultiplier}px)`;
+                                });
+                            }
+                        }
+                    }
+
+                    // Navbar Dynamics
+                    const nav = document.getElementById('main-nav');
+                    if (nav) {
+                        if (scrollPos > 100) {
+                            nav.classList.add('py-2', 'shadow-lg');
+                            nav.classList.remove('py-4');
+                        } else {
+                            nav.classList.add('py-4');
+                            nav.classList.remove('py-2', 'shadow-lg');
+                        }
+                    }
+
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+    </script>
+
+
+    <!-- ======================================================================= -->
+    <!-- SCRIPT 2: ISOLATED FIREBASE MODULE ENGINE                               -->
+    <!-- ======================================================================= -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const fallbackConfig = {
+            apiKey: "",
+            authDomain: "sparshika-1c56d.firebaseapp.com",
+            projectId: "sparshika-1c56d",
+            storageBucket: "sparshika-1c56d.appspot.com",
+            messagingSenderId: "1234567890",
+            appId: "1:1234567890:web:abcdef"
+        };
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : fallbackConfig;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        let app, auth, db;
+        try {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+        } catch (error) {
+            console.error("Firebase Initialization Error:", error);
+        }
+
+        let currentUser = null;
+
+        if (auth && db) {
+            const initAuth = async () => {
+                try {
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch(e) {
+                    console.error("Auth init failed", e);
+                }
+            };
+            initAuth();
+
+            onAuthStateChanged(auth, (user) => {
+                currentUser = user;
+                if (user) {
+                    registerVisit();
+                    streamLiveAnnouncements();
+                }
+            });
+        }
+
         const registerVisit = async () => {
             if (!currentUser) return;
             try {
@@ -860,116 +956,6 @@
             }
         };
 
-        // ----------------------------------------------------
-        // TICKETING / SUPPORT FORM CONTROLLER
-        // ----------------------------------------------------
-        window.processScreenshot = (event) => {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const img = new Image();
-                img.onload = () => {
-                    // Create dynamic canvas to resize and compress screenshot safely below 1MB
-                    const canvas = document.createElement('canvas');
-                    const maxDim = 800;
-                    let width = img.width;
-                    let height = img.height;
-
-                    if (width > height) {
-                        if (width > maxDim) {
-                            height *= maxDim / width;
-                            width = maxDim;
-                        }
-                    } else {
-                        if (height > maxDim) {
-                            width *= maxDim / height;
-                            height = maxDim;
-                        }
-                    }
-
-                    canvas.width = width;
-                    canvas.height = height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
-
-                    // Output compressed JPEG
-                    compressedScreenshotBase64 = canvas.toDataURL('image/jpeg', 0.6);
-
-                    // Show preview on site
-                    document.getElementById('image-preview').src = compressedScreenshotBase64;
-                    document.getElementById('image-preview-container').classList.remove('hidden');
-                    document.getElementById('upload-label').innerText = "Screenshot Loaded!";
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        };
-
-        window.clearScreenshot = () => {
-            compressedScreenshotBase64 = "";
-            document.getElementById('ticket-file').value = "";
-            document.getElementById('image-preview-container').classList.add('hidden');
-            document.getElementById('upload-label').innerText = "Attach Screenshot";
-        };
-
-        window.handleNewTicket = async (event) => {
-            event.preventDefault();
-            if (!currentUser) {
-                alert("Security Error: Unauthenticated connection profile.");
-                return;
-            }
-
-            const feedbackDiv = document.getElementById('ticket-form-status');
-            const submitBtn = document.getElementById('ticket-submit-btn');
-
-            feedbackDiv.className = "font-mono text-sm px-4 py-3 border-4 border-black font-bold bg-[#FFD700] text-black block mb-4 animate-pulse";
-            feedbackDiv.innerText = "TRANSMITTING TICKET DATA...";
-            submitBtn.disabled = true;
-
-            const product = document.getElementById('ticket-product').value;
-            const type = document.getElementById('ticket-type').value;
-            const desc = document.getElementById('ticket-desc').value;
-            const email = document.getElementById('ticket-email').value;
-
-            try {
-                const ticketsCol = collection(db, 'artifacts', appId, 'public', 'data', 'tickets');
-                await addDoc(ticketsCol, {
-                    product,
-                    type,
-                    description: desc,
-                    email,
-                    screenshot: compressedScreenshotBase64,
-                    userId: currentUser.uid,
-                    timestamp: Date.now(),
-                    status: 'open'
-                });
-
-                feedbackDiv.className = "font-mono text-sm px-4 py-3 border-4 border-black font-bold bg-[#00FF66] text-black block mb-4";
-                feedbackDiv.innerText = "SUCCESS: TICKET REGISTERED ON STS CENTRAL CORE";
-                
-                // Clear Form
-                document.getElementById('ticket-desc').value = "";
-                document.getElementById('ticket-email').value = "";
-                clearScreenshot();
-
-                setTimeout(() => {
-                    feedbackDiv.classList.add('hidden');
-                }, 5000);
-
-            } catch (err) {
-                console.error("Ticketing error: ", err);
-                feedbackDiv.className = "font-mono text-sm px-4 py-3 border-4 border-black font-bold bg-[#FF007F] text-white block mb-4";
-                feedbackDiv.innerText = "ERROR: FAILURE DELIVERING DATA PACKET";
-            } finally {
-                submitBtn.disabled = false;
-            }
-        };
-
-        // ----------------------------------------------------
-        // ANNOUNCEMENTS BOARD CONTROLLER
-        // ----------------------------------------------------
         const streamLiveAnnouncements = () => {
             if (!currentUser) return;
             const announcementsCol = collection(db, 'artifacts', appId, 'public', 'data', 'announcements');
@@ -979,8 +965,6 @@
                 snapshot.forEach(doc => {
                     announcements.push({ id: doc.id, ...doc.data() });
                 });
-
-                // Sort in memory by timestamp descending (Rule 2)
                 announcements.sort((a, b) => b.timestamp - a.timestamp);
                 renderAnnouncements(announcements);
             }, (error) => {
@@ -994,7 +978,6 @@
             container.innerHTML = "";
 
             if (list.length === 0) {
-                // Render initial bootstrap announcements if none exist in Firestore
                 const defaults = [
                     {
                         title: "Milestone: 10 Organic SEO Clicks Verified",
@@ -1039,13 +1022,118 @@
             });
         };
 
-        // Bootstrap helper
         const bootstrapInitialAnnouncement = async (item) => {
             try {
                 const announcementsCol = collection(db, 'artifacts', appId, 'public', 'data', 'announcements');
                 await addDoc(announcementsCol, item);
+            } catch (err) {}
+        };
+
+        // Form functions bound to window so HTML can trigger them
+        window.processScreenshot = (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const maxDim = 800;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > maxDim) {
+                            height *= maxDim / width;
+                            width = maxDim;
+                        }
+                    } else {
+                        if (height > maxDim) {
+                            width *= maxDim / height;
+                            height = maxDim;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    window.compressedScreenshotBase64 = canvas.toDataURL('image/jpeg', 0.6);
+
+                    const preview = document.getElementById('image-preview');
+                    const previewContainer = document.getElementById('image-preview-container');
+                    const uploadLabel = document.getElementById('upload-label');
+                    
+                    if(preview) preview.src = window.compressedScreenshotBase64;
+                    if(previewContainer) previewContainer.classList.remove('hidden');
+                    if(uploadLabel) uploadLabel.innerText = "Screenshot Loaded!";
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+
+        window.handleNewTicket = async (event) => {
+            event.preventDefault();
+            if (!currentUser) {
+                alert("Security Error: Unauthenticated connection profile.");
+                return;
+            }
+
+            const feedbackDiv = document.getElementById('ticket-form-status');
+            const submitBtn = document.getElementById('ticket-submit-btn');
+
+            if(feedbackDiv) {
+                feedbackDiv.className = "font-mono text-sm px-4 py-3 border-4 border-black font-bold bg-[#FFD700] text-black block mb-4 animate-pulse";
+                feedbackDiv.innerText = "TRANSMITTING TICKET DATA...";
+                feedbackDiv.classList.remove('hidden');
+            }
+            if(submitBtn) submitBtn.disabled = true;
+
+            const product = document.getElementById('ticket-product').value;
+            const type = document.getElementById('ticket-type').value;
+            const desc = document.getElementById('ticket-desc').value;
+            const email = document.getElementById('ticket-email').value;
+
+            try {
+                const ticketsCol = collection(db, 'artifacts', appId, 'public', 'data', 'tickets');
+                await addDoc(ticketsCol, {
+                    product,
+                    type,
+                    description: desc,
+                    email,
+                    screenshot: window.compressedScreenshotBase64,
+                    userId: currentUser.uid,
+                    timestamp: Date.now(),
+                    status: 'open'
+                });
+
+                if(feedbackDiv) {
+                    feedbackDiv.className = "font-mono text-sm px-4 py-3 border-4 border-black font-bold bg-[#00FF66] text-black block mb-4";
+                    feedbackDiv.innerText = "SUCCESS: TICKET REGISTERED ON STS CENTRAL CORE";
+                }
+                
+                document.getElementById('ticket-desc').value = "";
+                document.getElementById('ticket-email').value = "";
+                
+                if (typeof window.clearScreenshot === "function") {
+                    window.clearScreenshot();
+                }
+
+                setTimeout(() => {
+                    if(feedbackDiv) feedbackDiv.classList.add('hidden');
+                }, 5000);
+
             } catch (err) {
-                console.error("Bootstrap err: ", err);
+                console.error("Ticketing error: ", err);
+                if(feedbackDiv) {
+                    feedbackDiv.className = "font-mono text-sm px-4 py-3 border-4 border-black font-bold bg-[#FF007F] text-white block mb-4";
+                    feedbackDiv.innerText = "ERROR: FAILURE DELIVERING DATA PACKET";
+                }
+            } finally {
+                if(submitBtn) submitBtn.disabled = false;
             }
         };
 
@@ -1056,18 +1144,20 @@
             const statusDiv = document.getElementById('ann-broadcast-status');
 
             if (passcode !== 'sts2026') {
-                errorDiv.classList.remove('hidden');
+                if(errorDiv) errorDiv.classList.remove('hidden');
                 return;
             }
-            errorDiv.classList.add('hidden');
+            if(errorDiv) errorDiv.classList.add('hidden');
 
             const title = document.getElementById('ann-title').value;
             const description = document.getElementById('ann-desc').value;
             const category = document.getElementById('ann-cat').value;
             const author = document.getElementById('ann-author').value;
 
-            statusDiv.classList.remove('hidden');
-            statusDiv.innerText = "AUTHENTICATING AND SYNCING SECURITY PATHS...";
+            if(statusDiv) {
+                statusDiv.classList.remove('hidden');
+                statusDiv.innerText = "AUTHENTICATING AND SYNCING SECURITY PATHS...";
+            }
 
             try {
                 const announcementsCol = collection(db, 'artifacts', appId, 'public', 'data', 'announcements');
@@ -1082,169 +1172,20 @@
                 document.getElementById('ann-title').value = '';
                 document.getElementById('ann-desc').value = '';
                 document.getElementById('ann-passcode').value = '';
-                closeAnnouncementModal();
+                
+                if (typeof window.closeAnnouncementModal === "function") {
+                    window.closeAnnouncementModal();
+                }
 
             } catch (err) {
                 console.error("Firestore push error: ", err);
-                statusDiv.innerText = "DATABASE PERMISSION REJECTED: RETRY SECURE LINK";
+                if(statusDiv) statusDiv.innerText = "DATABASE PERMISSION REJECTED: RETRY SECURE LINK";
             } finally {
                 setTimeout(() => {
-                    statusDiv.classList.add('hidden');
+                    if(statusDiv) statusDiv.classList.add('hidden');
                 }, 4000);
             }
         };
-
-        // ----------------------------------------------------
-        // VISUALS, PARALLAX, AND THEME ENGINE
-        // ----------------------------------------------------
-        // Dynamic scaling engine specifically solving the mobile overlay bug
-        const updateResponsiveLayout = () => {
-            if (window.innerWidth < 768) {
-                // Dynamically offset spacing depending on variable screen size on mobile/iPhones
-                baseGap = window.innerWidth * 0.12; 
-                const gapSlider = document.getElementById('gap-slider');
-                if (gapSlider) gapSlider.value = baseGap;
-            } else {
-                baseGap = 95;
-                const gapSlider = document.getElementById('gap-slider');
-                if (gapSlider) gapSlider.value = 95;
-            }
-            adjustLogoGap(baseGap);
-        };
-
-        window.addEventListener('resize', updateResponsiveLayout);
-        updateResponsiveLayout(); // Bootstrap measurements
-
-        // Check for custom direct support hash landing immediately on pageload
-        const checkIncomingHash = () => {
-            if (window.location.hash === '#support') {
-                navigateToView('support');
-            } else {
-                navigateToView('portal');
-            }
-        };
-        window.addEventListener('hashchange', checkIncomingHash);
-        checkIncomingHash();
-
-        // Parallax scroll effect mapping with amplified multipliers
-        window.addEventListener('scroll', () => {
-            const scrollPos = window.pageYOffset;
-            const windowHeight = window.innerHeight;
-            
-            // Execute home view scrolling only if it is visible to conserve rendering overhead
-            const portalView = document.getElementById('portal-view');
-            if (portalView && !portalView.classList.contains('hidden')) {
-                // ----------------------------------------------------
-                // HEADER & LOGO PARALLAX (Direct Scroll Mapping)
-                // ----------------------------------------------------
-                const bgLayer = document.getElementById('hero-bg-layer');
-                if (bgLayer) bgLayer.style.transform = `translateY(${scrollPos * 0.35}px)`;
-
-                const shard1 = document.getElementById('shard-1');
-                const shard2 = document.getElementById('shard-2');
-                const shard3 = document.getElementById('shard-3');
-                
-                if (shard1) shard1.style.transform = `translateY(${scrollPos * -0.9}px) rotate(${scrollPos * 0.25 + 12}deg)`;
-                if (shard2) shard2.style.transform = `translateY(${scrollPos * 0.65}px) rotate(${scrollPos * -0.15 - 45}deg)`;
-                if (shard3) shard3.style.transform = `translateY(${scrollPos * -0.45}px)`;
-
-                const titleParallax = document.getElementById('title-parallax');
-                if (titleParallax) {
-                    titleParallax.style.transform = `translateY(${scrollPos * 0.6}px)`;
-                    titleParallax.style.opacity = Math.max(1 - (scrollPos / 300), 0);
-                }
-
-                const s1 = document.getElementById('s1-letter');
-                const s2 = document.getElementById('s2-letter');
-                const t = document.getElementById('t-letter');
-
-                const offsetMultiplier = scrollPos * 0.65;
-                if (s1) s1.style.transform = `translate(${-baseGap - offsetMultiplier}px, ${scrollPos * 0.15}px)`;
-                if (s2) s2.style.transform = `translate(${baseGap + offsetMultiplier}px, ${scrollPos * 0.15}px)`;
-                if (t) t.style.transform = `translate(0px, ${scrollPos * 0.08}px)`;
-
-                // ----------------------------------------------------
-                // PROJECTS SECTION DYNAMICS (Scroll Percentage Mapping)
-                // ----------------------------------------------------
-                const projectsSec = document.getElementById('projects');
-                if (projectsSec) {
-                    const projRect = projectsSec.getBoundingClientRect();
-                    if (projRect.top < windowHeight && projRect.bottom > 0) {
-                        const totalProjTrack = windowHeight + projRect.height;
-                        const progress = (windowHeight - projRect.top) / totalProjTrack;
-                        const centeredProgress = progress - 0.5;
-
-                        const driftHeader = document.getElementById('projects-header-drift');
-                        const cSnap = document.getElementById('card-snapnexus');
-                        const cSparshika = document.getElementById('card-sparshika');
-                        const pShard1 = document.getElementById('projects-shard-1');
-                        const pShard2 = document.getElementById('projects-shard-2');
-
-                        if (driftHeader) driftHeader.style.transform = `translateX(${centeredProgress * -350}px) rotate(${centeredProgress * -12}deg)`;
-                        if (cSnap) cSnap.style.transform = `translateY(${centeredProgress * -160}px)`;
-                        if (cSparshika) cSparshika.style.transform = `translateY(${centeredProgress * 160}px)`;
-                        if (pShard1) pShard1.style.transform = `translateY(${centeredProgress * -250}px) rotate(${scrollPos * 0.15}deg)`;
-                        if (pShard2) pShard2.style.transform = `translateY(${centeredProgress * 300}px) rotate(${scrollPos * -0.08}deg)`;
-                    }
-                }
-
-                // ----------------------------------------------------
-                // INTERACTIVE SANDBOX DYNAMICS
-                // ----------------------------------------------------
-                const sandboxCard = document.getElementById('sandbox-card');
-                if (sandboxCard) {
-                    const sandRect = sandboxCard.getBoundingClientRect();
-                    if (sandRect.top < windowHeight && sandRect.bottom > 0) {
-                        const totalSandTrack = windowHeight + sandRect.height;
-                        const progress = (windowHeight - sandRect.top) / totalSandTrack;
-                        const centeredProgress = progress - 0.5;
-
-                        sandboxCard.style.transform = `translateY(${centeredProgress * -140}px) rotate(${centeredProgress * 22}deg)`;
-                    }
-                }
-
-                // ----------------------------------------------------
-                // ANNOUNCEMENTS SECTION DYNAMICS
-                // ----------------------------------------------------
-                const annSec = document.getElementById('announcements');
-                if (annSec) {
-                    const annRect = annSec.getBoundingClientRect();
-                    if (annRect.top < windowHeight && annRect.bottom > 0) {
-                        const totalAnnTrack = windowHeight + annRect.height;
-                        const progress = (windowHeight - annRect.top) / totalAnnTrack;
-                        const centeredProgress = progress - 0.5;
-
-                        const annDrift = document.getElementById('announcements-header-drift');
-                        const annShard1 = document.getElementById('announcements-shard-1');
-                        const annShard2 = document.getElementById('announcements-shard-2');
-
-                        if (annDrift) annDrift.style.transform = `translateX(${centeredProgress * 320}px) rotate(${centeredProgress * 8}deg)`;
-                        if (annShard1) annShard1.style.transform = `translateY(${centeredProgress * -300}px) rotate(${scrollPos * 0.2}deg)`;
-                        if (annShard2) annShard2.style.transform = `translateY(${centeredProgress * 250}px) rotate(${scrollPos * -0.15}deg)`;
-
-                        const annCards = document.querySelectorAll('.scroll-reactive-card');
-                        annCards.forEach((card, index) => {
-                            const directionMultiplier = (index % 2 === 0) ? -120 : 120;
-                            card.style.transform = `translateY(${centeredProgress * directionMultiplier}px)`;
-                        });
-                    }
-                }
-            }
-
-            // Navbar adaptation on scroll safely split for cleaner class handling
-            const nav = document.getElementById('main-nav');
-            if (nav) {
-                if (scrollPos > 100) {
-                    nav.classList.add('py-2');
-                    nav.classList.add('shadow-lg');
-                    nav.classList.remove('py-4');
-                } else {
-                    nav.classList.add('py-4');
-                    nav.classList.remove('py-2');
-                    nav.classList.remove('shadow-lg');
-                }
-            }
-        });
     </script>
 </body>
 </html>
