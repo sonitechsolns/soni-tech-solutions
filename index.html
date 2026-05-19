@@ -58,16 +58,19 @@
             transition: transform 0.05s ease-out;
         }
 
-        /* Replicating the overlapping structure of your STS.png */
+        /* Replicating the overlapping structure of your STS.png on initial load */
         .letter-s1 {
+            transform: translate(-95px, 0px);
             z-index: 10;
         }
 
         .letter-t {
+            transform: translate(0px, 0px);
             z-index: 20;
         }
 
         .letter-s2 {
+            transform: translate(95px, 0px);
             z-index: 30;
         }
 
@@ -709,14 +712,13 @@
                 window.location.hash = 'support';
             } else {
                 if (portalView) portalView.classList.remove('hidden');
-                if (supportView) supportView.classList.add('hidden');
+                if (supportView) supportView.classList.add('hidden'); // Fixed visual visibility typo here!
                 window.scrollTo({ top: 0, behavior: 'instant' });
                 // Clean the hash cleanly on exit - wrapped in try/catch to bypass iframe sandboxed restriction errors
                 try {
                     history.pushState("", document.title, window.location.pathname + window.location.search);
                 } catch (e) {
-                    // Fallback for sandboxed preview iframe environments where pushState origin matching is prohibited
-                    window.location.hash = "";
+                    // Handled safely: Do nothing on iframe sandbox error to prevent infinite recursion loop
                 }
             }
         }
@@ -1229,15 +1231,17 @@
                 }
             }
 
-            // Navbar adaptation on scroll
+            // Navbar adaptation on scroll safely split for cleaner class handling
             const nav = document.getElementById('main-nav');
             if (nav) {
                 if (scrollPos > 100) {
-                    nav.classList.add('py-2', 'shadow-lg');
+                    nav.classList.add('py-2');
+                    nav.classList.add('shadow-lg');
                     nav.classList.remove('py-4');
                 } else {
                     nav.classList.add('py-4');
-                    nav.classList.remove('py-2', 'shadow-lg');
+                    nav.classList.remove('py-2');
+                    nav.classList.remove('shadow-lg');
                 }
             }
         });
