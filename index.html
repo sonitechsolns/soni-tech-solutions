@@ -887,128 +887,71 @@
     </script>
 
     <!-- ======================================================================= -->
-    <!-- SCRIPT 2: ISOLATED FIREBASE MODULE ENGINE (FIXED FOR CORRECT PATHS)    -->
+    <!-- SCRIPT 2: ISOLATED FIREBASE MODULE ENGINE (FIXED FOR AUTH ERRORS)       -->
     <!-- ======================================================================= -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Fallback configuration
-        let firebaseConfig;
-        let appId = 'default-app-id';
+        // Firebase Configuration (Project: sts-portal-prod)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDuh5DR9xCnysNDQwkkuLuEC8mVl56v77E",
+            authDomain: "sts-portal-prod.firebaseapp.com",
+            projectId: "sts-portal-prod",
+            storageBucket: "sts-portal-prod.firebasestorage.app",
+            messagingSenderId: "912013124266",
+            appId: "1:912013124266:web:c7fe3bf1e1676a887d26d3",
+            measurementId: "G-3K1ZZ59PZZ"
+        };
+        const appId = "sts-portal-prod"; // used for Firestore paths
 
-        if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-            try {
-                firebaseConfig = JSON.parse(__firebase_config);
-            } catch (e) {
-                console.warn("Failed to parse __firebase_config, using fallback");
-                firebaseConfig = null;
-            }
-        }
-        if (typeof __app_id !== 'undefined') appId = __app_id;
-
-        // Safe fallback for missing config
-        if (!firebaseConfig || !firebaseConfig.apiKey) {
-            console.warn("Firebase config missing or invalid. Running in local-only mode (Firebase features disabled).");
-            // Provide dummy functions to avoid crashes
-            window.processScreenshot = window.processScreenshot || ((event) => {
-                const file = event.target.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        const maxDim = 800;
-                        let width = img.width, height = img.height;
-                        if (width > height) {
-                            if (width > maxDim) { height *= maxDim / width; width = maxDim; }
-                        } else {
-                            if (height > maxDim) { width *= maxDim / height; height = maxDim; }
-                        }
-                        canvas.width = width; canvas.height = height;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, width, height);
-                        window.compressedScreenshotBase64 = canvas.toDataURL('image/jpeg', 0.6);
-                        const preview = document.getElementById('image-preview');
-                        const previewContainer = document.getElementById('image-preview-container');
-                        const uploadLabel = document.getElementById('upload-label');
-                        if (preview) preview.src = window.compressedScreenshotBase64;
-                        if (previewContainer) previewContainer.classList.remove('hidden');
-                        if (uploadLabel) uploadLabel.innerText = "Screenshot Loaded!";
-                    };
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            });
-            window.handleNewTicket = window.handleNewTicket || ((event) => {
-                event.preventDefault();
-                alert("Firebase not configured – ticket cannot be saved. Please contact administrator.");
-            });
-            window.handleNewAnnouncement = window.handleNewAnnouncement || ((event) => {
-                event.preventDefault();
-                alert("Firebase not configured – announcement cannot be published.");
-            });
-            // Render static fallback announcements
-            const container = document.getElementById('announcements-container');
-            if (container && container.innerHTML.includes('Synchronizing')) {
-                container.innerHTML = `
-                    <div class="bg-[#121214] border-4 border-black p-6 relative group">
-                        <div class="flex justify-between items-start mb-4">
-                            <span class="bg-[#1A1A1E] text-zinc-400 font-mono text-xs px-2 py-1 border border-zinc-800">MAY 2026</span>
-                            <span class="text-xs text-[#2CC7FF] font-black uppercase tracking-wider">NOTICE</span>
-                        </div>
-                        <h3 class="text-xl font-bold uppercase mb-2 text-white">Firebase Configuration Pending</h3>
-                        <p class="text-zinc-400 text-sm leading-relaxed mb-4">The STS core database connection is currently being initialized. Announcements and ticketing will be available shortly.</p>
-                        <div class="text-xs text-zinc-600 font-mono">SYSTEM READY</div>
-                    </div>
-                `;
-            }
-            console.log("Firebase not initialized, continuing in safe mode.");
-            return;
-        }
-
-        // Normal initialization
         let app, auth, db;
+        let currentUser = null;
+        let firebaseAvailable = false;
+
+        // Initialize Firebase gracefully
         try {
             app = initializeApp(firebaseConfig);
             auth = getAuth(app);
             db = getFirestore(app);
+            firebaseAvailable = true;
         } catch (error) {
             console.error("Firebase Initialization Error:", error);
-            return;
+            firebaseAvailable = false;
         }
 
-        let currentUser = null;
-
-        if (auth && db) {
-            const initAuth = async () => {
-                try {
-                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        await signInWithCustomToken(auth, __initial_auth_token);
+        if (firebaseAvailable) {
+            // Sign in anonymously – catch and handle 'auth/configuration-not-found'
+            signInAnonymously(auth)
+                .then(() => {
+                    console.log("Firebase Auth: anonymous user connected");
+                })
+                .catch((err) => {
+                    if (err.code === 'auth/configuration-not-found') {
+                        console.warn("Anonymous authentication not enabled in Firebase Console. Please enable it in Authentication > Sign-in methods.");
                     } else {
-                        await signInAnonymously(auth);
+                        console.error("Auth error:", err.code, err.message);
                     }
-                } catch(e) {
-                    console.error("Auth init failed", e);
-                }
-            };
-            initAuth();
+                    // Firebase still works for Firestore reads/writes if auth is optional? Actually Firestore requires auth. So we will disable Firestore features.
+                    firebaseAvailable = false;
+                });
 
             onAuthStateChanged(auth, (user) => {
                 currentUser = user;
-                if (user) {
+                if (user && firebaseAvailable) {
                     registerVisit();
                     streamLiveAnnouncements();
                 }
             });
+        } else {
+            console.warn("Firebase not available – running in local-only mode.");
         }
 
+        // ---- Helper functions that only run if Firebase is properly initialized ----
         const registerVisit = async () => {
-            if (!currentUser) return;
+            if (!currentUser || !firebaseAvailable) return;
             try {
-                // visits collection path: artifacts/${appId}/public/data/visits
                 const visitsCol = collection(db, 'artifacts', appId, 'public', 'data', 'visits');
                 await addDoc(visitsCol, {
                     userId: currentUser.uid,
@@ -1017,12 +960,12 @@
                     resolution: `${window.innerWidth}x${window.innerHeight}`
                 });
             } catch (err) {
-                console.error("Friction logging visitor analytics: ", err);
+                console.error("Visitor analytics error:", err);
             }
         };
 
         const streamLiveAnnouncements = () => {
-            if (!currentUser) return;
+            if (!currentUser || !firebaseAvailable) return;
             const announcementsCol = collection(db, 'artifacts', appId, 'public', 'data', 'announcements');
             onSnapshot(announcementsCol, (snapshot) => {
                 const announcements = [];
@@ -1032,7 +975,7 @@
                 announcements.sort((a, b) => b.timestamp - a.timestamp);
                 renderAnnouncements(announcements);
             }, (error) => {
-                console.error("Firestore announcements real-time update error: ", error);
+                console.error("Announcements real-time error:", error);
             });
         };
 
@@ -1064,9 +1007,7 @@
 
             list.forEach(item => {
                 const dateObj = new Date(item.timestamp);
-                const options = { year: 'numeric', month: 'short', day: 'numeric' };
-                const formattedDate = dateObj.toLocaleDateString('en-US', options).toUpperCase();
-
+                const formattedDate = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }).toUpperCase();
                 const card = document.createElement('div');
                 card.className = "bg-[#121214] border-4 border-black p-6 relative group hover:border-[#2CC7FF] transition-all duration-300 will-change-transform scroll-reactive-card";
                 card.innerHTML = `
@@ -1074,12 +1015,8 @@
                         <span class="bg-[#1A1A1E] text-zinc-400 font-mono text-xs px-2 py-1 border border-zinc-800">${formattedDate}</span>
                         <span class="text-xs text-[#2CC7FF] font-black uppercase tracking-wider">${item.category || 'TRANSMISSION'}</span>
                     </div>
-                    <h3 class="text-xl font-bold uppercase mb-2 text-white">
-                        ${item.title}
-                    </h3>
-                    <p class="text-zinc-400 text-sm leading-relaxed mb-4">
-                        ${item.description}
-                    </p>
+                    <h3 class="text-xl font-bold uppercase mb-2 text-white">${item.title}</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed mb-4">${item.description}</p>
                     <div class="text-xs text-zinc-600 font-mono">AUTHORIZED BY ${item.author || 'STS_CORE'}</div>
                 `;
                 container.appendChild(card);
@@ -1087,52 +1024,39 @@
         };
 
         const bootstrapInitialAnnouncement = async (item) => {
+            if (!firebaseAvailable) return;
             try {
                 const announcementsCol = collection(db, 'artifacts', appId, 'public', 'data', 'announcements');
                 await addDoc(announcementsCol, item);
             } catch (err) {}
         };
 
-        // --- Enhanced Ticket Handler with correct Firestore path and feedback ---
+        // --- Screenshot & Ticket Handlers (only if Firebase available) ---
         window.processScreenshot = (event) => {
             const file = event.target.files[0];
             if (!file) return;
-
             const reader = new FileReader();
             reader.onload = (e) => {
                 const img = new Image();
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
+                    let width = img.width, height = img.height;
                     const maxDim = 800;
-                    let width = img.width;
-                    let height = img.height;
-
                     if (width > height) {
-                        if (width > maxDim) {
-                            height *= maxDim / width;
-                            width = maxDim;
-                        }
+                        if (width > maxDim) { height *= maxDim / width; width = maxDim; }
                     } else {
-                        if (height > maxDim) {
-                            width *= maxDim / height;
-                            height = maxDim;
-                        }
+                        if (height > maxDim) { width *= maxDim / height; height = maxDim; }
                     }
-
-                    canvas.width = width;
-                    canvas.height = height;
+                    canvas.width = width; canvas.height = height;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
-
                     window.compressedScreenshotBase64 = canvas.toDataURL('image/jpeg', 0.6);
-
                     const preview = document.getElementById('image-preview');
                     const previewContainer = document.getElementById('image-preview-container');
                     const uploadLabel = document.getElementById('upload-label');
-                    
-                    if(preview) preview.src = window.compressedScreenshotBase64;
-                    if(previewContainer) previewContainer.classList.remove('hidden');
-                    if(uploadLabel) uploadLabel.innerText = "Screenshot Loaded!";
+                    if (preview) preview.src = window.compressedScreenshotBase64;
+                    if (previewContainer) previewContainer.classList.remove('hidden');
+                    if (uploadLabel) uploadLabel.innerText = "Screenshot Loaded!";
                 };
                 img.src = e.target.result;
             };
@@ -1141,117 +1065,108 @@
 
         window.handleNewTicket = async (event) => {
             event.preventDefault();
-            if (!currentUser) {
-                alert("Security Error: Unauthenticated connection profile.");
+            if (!firebaseAvailable || !currentUser) {
+                alert("Firebase services are not available. Please try again later.");
                 return;
             }
-
             const feedbackDiv = document.getElementById('ticket-form-status');
             const submitBtn = document.getElementById('ticket-submit-btn');
-
-            if(feedbackDiv) {
+            if (feedbackDiv) {
                 feedbackDiv.className = "font-mono text-sm px-4 py-3 border-4 border-black font-bold bg-[#FFD700] text-black block mb-4 animate-pulse";
                 feedbackDiv.innerText = "TRANSMITTING TICKET DATA...";
                 feedbackDiv.classList.remove('hidden');
             }
-            if(submitBtn) submitBtn.disabled = true;
-
+            if (submitBtn) submitBtn.disabled = true;
             const product = document.getElementById('ticket-product').value;
             const type = document.getElementById('ticket-type').value;
             const desc = document.getElementById('ticket-desc').value;
             const email = document.getElementById('ticket-email').value;
-
             try {
-                // CORRECT PATH: artifacts/${appId}/public/data/tickets
                 const ticketsCol = collection(db, 'artifacts', appId, 'public', 'data', 'tickets');
                 await addDoc(ticketsCol, {
-                    product,
-                    type,
-                    description: desc,
-                    email,
+                    product, type, description: desc, email,
                     screenshot: window.compressedScreenshotBase64,
                     userId: currentUser.uid,
                     timestamp: Date.now(),
                     status: 'open'
                 });
-
-                if(feedbackDiv) {
+                if (feedbackDiv) {
                     feedbackDiv.className = "font-mono text-sm px-4 py-3 border-4 border-black font-bold bg-[#00FF66] text-black block mb-4";
                     feedbackDiv.innerText = "SUCCESS: TICKET REGISTERED ON STS CENTRAL CORE";
                 }
-                
-                // Clear form
                 document.getElementById('ticket-desc').value = "";
                 document.getElementById('ticket-email').value = "";
-                if (typeof window.clearScreenshot === "function") {
-                    window.clearScreenshot();
-                }
-
-                setTimeout(() => {
-                    if(feedbackDiv) feedbackDiv.classList.add('hidden');
-                }, 5000);
-
+                if (typeof window.clearScreenshot === "function") window.clearScreenshot();
+                setTimeout(() => { if (feedbackDiv) feedbackDiv.classList.add('hidden'); }, 5000);
             } catch (err) {
-                console.error("Ticketing error: ", err);
-                if(feedbackDiv) {
+                console.error("Ticketing error:", err);
+                if (feedbackDiv) {
                     feedbackDiv.className = "font-mono text-sm px-4 py-3 border-4 border-black font-bold bg-[#FF007F] text-white block mb-4";
                     feedbackDiv.innerText = "ERROR: FAILURE DELIVERING DATA PACKET";
                 }
             } finally {
-                if(submitBtn) submitBtn.disabled = false;
+                if (submitBtn) submitBtn.disabled = false;
             }
         };
 
         window.handleNewAnnouncement = async (event) => {
             event.preventDefault();
+            if (!firebaseAvailable || !currentUser) {
+                alert("Firebase services are not available. Please try again later.");
+                return;
+            }
             const passcode = document.getElementById('ann-passcode').value;
             const errorDiv = document.getElementById('passcode-error');
             const statusDiv = document.getElementById('ann-broadcast-status');
-
             if (passcode !== 'sts2026') {
-                if(errorDiv) errorDiv.classList.remove('hidden');
+                if (errorDiv) errorDiv.classList.remove('hidden');
                 return;
             }
-            if(errorDiv) errorDiv.classList.add('hidden');
-
+            if (errorDiv) errorDiv.classList.add('hidden');
             const title = document.getElementById('ann-title').value;
             const description = document.getElementById('ann-desc').value;
             const category = document.getElementById('ann-cat').value;
             const author = document.getElementById('ann-author').value;
-
-            if(statusDiv) {
+            if (statusDiv) {
                 statusDiv.classList.remove('hidden');
                 statusDiv.innerText = "AUTHENTICATING AND SYNCING SECURITY PATHS...";
             }
-
             try {
-                // CORRECT PATH: artifacts/${appId}/public/data/announcements
                 const announcementsCol = collection(db, 'artifacts', appId, 'public', 'data', 'announcements');
-                await addDoc(announcementsCol, {
-                    title,
-                    description,
-                    category,
-                    author,
-                    timestamp: Date.now()
-                });
-
-                // Clear form and close modal
+                await addDoc(announcementsCol, { title, description, category, author, timestamp: Date.now() });
                 document.getElementById('ann-title').value = '';
                 document.getElementById('ann-desc').value = '';
                 document.getElementById('ann-passcode').value = '';
-                if (typeof window.closeAnnouncementModal === "function") {
-                    window.closeAnnouncementModal();
-                }
-
+                if (typeof window.closeAnnouncementModal === "function") window.closeAnnouncementModal();
             } catch (err) {
-                console.error("Firestore push error: ", err);
-                if(statusDiv) statusDiv.innerText = "DATABASE PERMISSION REJECTED: RETRY SECURE LINK";
+                console.error("Firestore push error:", err);
+                if (statusDiv) statusDiv.innerText = "DATABASE PERMISSION REJECTED: RETRY SECURE LINK";
             } finally {
-                setTimeout(() => {
-                    if(statusDiv) statusDiv.classList.add('hidden');
-                }, 4000);
+                setTimeout(() => { if (statusDiv) statusDiv.classList.add('hidden'); }, 4000);
             }
         };
+
+        // If Firebase not available, show a static fallback message and disable ticket/announcement buttons
+        if (!firebaseAvailable) {
+            const container = document.getElementById('announcements-container');
+            if (container && container.innerHTML.includes('Synchronizing')) {
+                container.innerHTML = `
+                    <div class="bg-[#121214] border-4 border-black p-6 relative group">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="bg-[#1A1A1E] text-zinc-400 font-mono text-xs px-2 py-1 border border-zinc-800">MAY 2026</span>
+                            <span class="text-xs text-[#2CC7FF] font-black uppercase tracking-wider">NOTICE</span>
+                        </div>
+                        <h3 class="text-xl font-bold uppercase mb-2 text-white">Firebase Configuration Pending</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed mb-4">Anonymous authentication is not enabled. Please enable it in Firebase Console > Authentication.</p>
+                        <div class="text-xs text-zinc-600 font-mono">STS CORE</div>
+                    </div>
+                `;
+            }
+            const addAnnBtn = document.querySelector('#announcements button');
+            if (addAnnBtn) addAnnBtn.disabled = true;
+            const submitTicketBtn = document.getElementById('ticket-submit-btn');
+            if (submitTicketBtn) submitTicketBtn.disabled = true;
+        }
     </script>
 </body>
 </html>
