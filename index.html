@@ -535,7 +535,6 @@
         </div>
     </div>
 
-
     <!-- ======================================================================= -->
     <!-- SCRIPT 1: STANDARD GLOBAL VISUAL ENGINE (GUARANTEES PARALLAX ON LOAD)   -->
     <!-- ======================================================================= -->
@@ -887,26 +886,92 @@
         });
     </script>
 
-
     <!-- ======================================================================= -->
-    <!-- SCRIPT 2: ISOLATED FIREBASE MODULE ENGINE                               -->
+    <!-- SCRIPT 2: ISOLATED FIREBASE MODULE ENGINE (FIXED FOR CONFIG ERRORS)    -->
     <!-- ======================================================================= -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const fallbackConfig = {
-            apiKey: "",
-            authDomain: "sparshika-1c56d.firebaseapp.com",
-            projectId: "sparshika-1c56d",
-            storageBucket: "sparshika-1c56d.appspot.com",
-            messagingSenderId: "1234567890",
-            appId: "1:1234567890:web:abcdef"
-        };
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : fallbackConfig;
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        // [FIX] Robust config handling – prevents "auth/configuration-not-found"
+        let firebaseConfig;
+        let appId = 'default-app-id';
 
+        // Try to get config from global __firebase_config (if provided by server)
+        if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+            try {
+                firebaseConfig = JSON.parse(__firebase_config);
+            } catch (e) {
+                console.warn("Failed to parse __firebase_config, using fallback");
+                firebaseConfig = null;
+            }
+        }
+        if (typeof __app_id !== 'undefined') appId = __app_id;
+
+        // Safe fallback – prevents auth/configuration-not-found error
+        if (!firebaseConfig || !firebaseConfig.apiKey) {
+            console.warn("Firebase config missing or invalid. Running in local-only mode (Firebase features disabled).");
+            // No Firebase initialization – just provide empty implementations to avoid crashes
+            window.processScreenshot = window.processScreenshot || ((event) => {
+                const file = event.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const maxDim = 800;
+                        let width = img.width, height = img.height;
+                        if (width > height) {
+                            if (width > maxDim) { height *= maxDim / width; width = maxDim; }
+                        } else {
+                            if (height > maxDim) { width *= maxDim / height; height = maxDim; }
+                        }
+                        canvas.width = width; canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        window.compressedScreenshotBase64 = canvas.toDataURL('image/jpeg', 0.6);
+                        const preview = document.getElementById('image-preview');
+                        const previewContainer = document.getElementById('image-preview-container');
+                        const uploadLabel = document.getElementById('upload-label');
+                        if (preview) preview.src = window.compressedScreenshotBase64;
+                        if (previewContainer) previewContainer.classList.remove('hidden');
+                        if (uploadLabel) uploadLabel.innerText = "Screenshot Loaded!";
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+            window.handleNewTicket = window.handleNewTicket || ((event) => {
+                event.preventDefault();
+                alert("Firebase not configured – ticket cannot be saved. Please contact administrator.");
+            });
+            window.handleNewAnnouncement = window.handleNewAnnouncement || ((event) => {
+                event.preventDefault();
+                alert("Firebase not configured – announcement cannot be published.");
+            });
+            // Render static announcements (fallback)
+            const container = document.getElementById('announcements-container');
+            if (container && container.innerHTML.includes('Synchronizing')) {
+                container.innerHTML = `
+                    <div class="bg-[#121214] border-4 border-black p-6 relative group">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="bg-[#1A1A1E] text-zinc-400 font-mono text-xs px-2 py-1 border border-zinc-800">MAY 2026</span>
+                            <span class="text-xs text-[#2CC7FF] font-black uppercase tracking-wider">NOTICE</span>
+                        </div>
+                        <h3 class="text-xl font-bold uppercase mb-2 text-white">Firebase Configuration Pending</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed mb-4">The STS core database connection is currently being initialized. Announcements and ticketing will be available shortly.</p>
+                        <div class="text-xs text-zinc-600 font-mono">SYSTEM READY</div>
+                    </div>
+                `;
+            }
+            // Exit early – no Firebase
+            console.log("Firebase not initialized, continuing in safe mode.");
+            throw new Error("Firebase not configured (graceful fallback)");
+        }
+
+        // Normal initialization path
         let app, auth, db;
         try {
             app = initializeApp(firebaseConfig);
@@ -914,6 +979,47 @@
             db = getFirestore(app);
         } catch (error) {
             console.error("Firebase Initialization Error:", error);
+            // Fallback: disable Firebase features but don't crash the page
+            window.processScreenshot = window.processScreenshot || ((event) => {
+                const file = event.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const maxDim = 800;
+                        let width = img.width, height = img.height;
+                        if (width > height) {
+                            if (width > maxDim) { height *= maxDim / width; width = maxDim; }
+                        } else {
+                            if (height > maxDim) { width *= maxDim / height; height = maxDim; }
+                        }
+                        canvas.width = width; canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        window.compressedScreenshotBase64 = canvas.toDataURL('image/jpeg', 0.6);
+                        const preview = document.getElementById('image-preview');
+                        const previewContainer = document.getElementById('image-preview-container');
+                        const uploadLabel = document.getElementById('upload-label');
+                        if (preview) preview.src = window.compressedScreenshotBase64;
+                        if (previewContainer) previewContainer.classList.remove('hidden');
+                        if (uploadLabel) uploadLabel.innerText = "Screenshot Loaded!";
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+            window.handleNewTicket = window.handleNewTicket || ((event) => {
+                event.preventDefault();
+                alert("Firebase not available – please try again later.");
+            });
+            window.handleNewAnnouncement = window.handleNewAnnouncement || ((event) => {
+                event.preventDefault();
+                alert("Firebase not available – please try again later.");
+            });
+            console.warn("Firebase failed to initialize, running in degraded mode.");
+            return; // Stop further execution
         }
 
         let currentUser = null;
