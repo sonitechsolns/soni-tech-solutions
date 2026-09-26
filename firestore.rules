@@ -1,0 +1,63 @@
+rules_version = '2';
+
+// Firestore rules for the Soni Tech Solutions portal (project: sts-portal-prod).
+// Paste into Firebase Console > Firestore Database > Rules, then Publish.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Must match ADMIN_EMAIL in index.html.
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email == 'sooperfast.net@yahoo.com'
+        && request.auth.token.firebase.sign_in_provider == 'password';
+    }
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isShortString(v, max) {
+      return v is string && v.size() <= max;
+    }
+
+    match /artifacts/sts-portal-prod/public/data {
+
+      // Public board: anyone can read, only the admin can write.
+      match /announcements/{id} {
+        allow read: if true;
+        allow create, update: if isAdmin()
+          && request.resource.data.keys().hasOnly(['title', 'description', 'category', 'author', 'timestamp'])
+          && isShortString(request.resource.data.title, 200)
+          && isShortString(request.resource.data.description, 5000)
+          && isShortString(request.resource.data.category, 60)
+          && isShortString(request.resource.data.author, 60)
+          && request.resource.data.timestamp is int;
+        allow delete: if isAdmin();
+      }
+
+      // Visitor pings: any signed-in (anonymous) visitor can add their own; only the admin can read.
+      match /visits/{id} {
+        allow create: if signedIn()
+          && request.resource.data.keys().hasOnly(['userId', 'timestamp', 'deviceAgent', 'resolution'])
+          && request.resource.data.userId == request.auth.uid
+          && isShortString(request.resource.data.deviceAgent, 500)
+          && isShortString(request.resource.data.resolution, 20);
+        allow read, delete: if isAdmin();
+      }
+
+      // Support tickets: visitors can file one; only the admin can read or change them.
+      match /tickets/{id} {
+        allow create: if signedIn()
+          && request.resource.data.keys().hasOnly(['product', 'type', 'description', 'email', 'screenshot', 'userId', 'timestamp', 'status'])
+          && request.resource.data.userId == request.auth.uid
+          && request.resource.data.status == 'open'
+          && request.resource.data.product in ['snapnexus', 'sparshika', 'sts-portal']
+          && request.resource.data.type in ['bug', 'billing', 'suggestion']
+          && isShortString(request.resource.data.description, 5000)
+          && isShortString(request.resource.data.email, 254)
+          && isShortString(request.resource.data.screenshot, 900000);
+        allow read, update, delete: if isAdmin();
+      }
+    }
+  }
+}
