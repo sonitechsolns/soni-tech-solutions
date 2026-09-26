@@ -134,6 +134,10 @@
             transition: transform 0.05s ease-out;
         }
         
+        html {
+            scroll-padding-top: 80px;
+        }
+
         .will-change-transform {
             will-change: transform;
         }
@@ -148,9 +152,9 @@
             <span class="hidden md:inline-block bg-black text-[#2CC7FF] font-mono text-xs px-2 py-1 uppercase tracking-widest font-bold border border-black">SONI TECH SOLUTIONS</span>
         </div>
         <div class="flex gap-4 items-center">
-            <a href="#projects" onclick="navigateToView('portal')" class="font-bold text-black hover:underline uppercase text-sm tracking-wider">PROJECTS</a>
-            <a href="#support" onclick="navigateToView('support')" class="font-bold text-black hover:underline uppercase text-sm tracking-wider">CONNECT</a>
-            <a href="#announcements" onclick="navigateToView('portal')" class="font-bold text-black hover:underline uppercase text-sm tracking-wider font-mono">LIVE FEED</a>
+            <a href="#projects" onclick="navigateToView('portal', 'projects')" class="font-bold text-black hover:underline uppercase text-sm tracking-wider">PROJECTS</a>
+            <a href="#support" class="font-bold text-black hover:underline uppercase text-sm tracking-wider">CONNECT</a>
+            <a href="#announcements" onclick="navigateToView('portal', 'announcements')" class="font-bold text-black hover:underline uppercase text-sm tracking-wider font-mono">LIVE FEED</a>
             <button onclick="toggleVisualMode()" class="bg-black text-white p-2 border-2 border-black hover:bg-white hover:text-black transition-colors" title="Toggle Interactive Accents">
                 <i class="fa-solid fa-palette"></i>
             </button>
@@ -242,7 +246,7 @@
                             <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">Fast Uploads</span>
                             <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">Live TV Slider</span>
                             <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">Admin Control</span>
-                            <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">Razorpay Ready</span>
+                            <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">UPI Payments</span>
                         </div>
                     </div>
 
@@ -251,7 +255,7 @@
                             <span>LAUNCH SNAPNEXUS</span>
                             <i class="fa-solid fa-arrow-up-right-from-square"></i>
                         </a>
-                        <button onclick="showDemoModal('snapnexus')" class="border-3 border-zinc-700 hover:border-white transition-colors py-3 px-6 uppercase font-bold text-sm tracking-wider">
+                        <button onclick="showDemoModal('snapnexus')" class="border-[3px] border-zinc-700 hover:border-white transition-colors py-3 px-6 uppercase font-bold text-sm tracking-wider">
                             Quick Status
                         </button>
                     </div>
@@ -286,7 +290,7 @@
                             <span>LAUNCH SPARSHIKA</span>
                             <i class="fa-solid fa-arrow-up-right-from-square"></i>
                         </a>
-                        <button onclick="showDemoModal('sparshika')" class="border-3 border-zinc-700 hover:border-white transition-colors py-3 px-6 uppercase font-bold text-sm tracking-wider">
+                        <button onclick="showDemoModal('sparshika')" class="border-[3px] border-zinc-700 hover:border-white transition-colors py-3 px-6 uppercase font-bold text-sm tracking-wider">
                             Quick Status
                         </button>
                     </div>
@@ -475,7 +479,7 @@
                 <span class="text-black">/</span>
                 <a href="https://sparshika-1c56d.web.app/" target="_blank" class="hover:underline">Sparshika</a>
                 <span class="text-black">/</span>
-                <a href="#projects" onclick="navigateToView('portal')" class="hover:underline">Portfolio</a>
+                <a href="#projects" onclick="navigateToView('portal', 'projects')" class="hover:underline">Portfolio</a>
             </div>
         </div>
     </footer>
@@ -520,7 +524,7 @@
                     </div>
                 </div>
                 <div class="border-t border-zinc-800 pt-4">
-                    <label class="block text-xs uppercase font-bold text-[#FF007F] mb-1">Admin Passcode (Access Key)</label>
+                    <label class="block text-xs uppercase font-bold text-[#FF007F] mb-1">Admin Passcode (Admin Account Password)</label>
                     <input type="password" id="ann-passcode" placeholder="••••••••" required class="w-full bg-black border-2 border-zinc-800 text-white p-3 rounded-none focus:outline-none focus:border-[#FF007F]">
                     <div id="passcode-error" class="hidden mt-2 bg-[#FF007F] text-white font-mono text-xs px-3 py-2 border-2 border-black font-bold">
                         ACCESS DENIED: INVALID STS SECURITY KEY
@@ -631,23 +635,34 @@
             changeAccent(colors[nextIdx].hex, colors[nextIdx].name);
         }
 
-        function navigateToView(viewName) {
+        function navigateToView(viewName, anchorId) {
             const portalView = document.getElementById('portal-view');
             const supportView = document.getElementById('support-view');
-            
+
             if (viewName === 'support') {
                 if (portalView) portalView.classList.add('hidden');
                 if (supportView) supportView.classList.remove('hidden');
                 window.scrollTo({ top: 0, behavior: 'instant' });
-                window.location.hash = 'support';
+                if (window.location.hash !== '#support') window.location.hash = 'support';
+                return;
+            }
+
+            const wasOnSupport = supportView && !supportView.classList.contains('hidden');
+            if (portalView) portalView.classList.remove('hidden');
+            if (supportView) supportView.classList.add('hidden');
+
+            const target = anchorId ? document.getElementById(anchorId) : null;
+            if (target) {
+                // Let the portal render before scrolling to the section
+                requestAnimationFrame(() => target.scrollIntoView({ behavior: wasOnSupport ? 'instant' : 'smooth', block: 'start' }));
             } else {
-                if (portalView) portalView.classList.remove('hidden');
-                if (supportView) supportView.classList.add('hidden');
                 window.scrollTo({ top: 0, behavior: 'instant' });
-                try {
-                    history.pushState("", document.title, window.location.pathname + window.location.search);
-                } catch (e) {
-                    // Safe bypass for sandboxes
+                if (window.location.hash === '#support') {
+                    try {
+                        history.pushState("", document.title, window.location.pathname + window.location.search);
+                    } catch (e) {
+                        // Safe bypass for sandboxes
+                    }
                 }
             }
         }
@@ -754,10 +769,12 @@
         };
 
         const checkIncomingHash = () => {
+            const supportView = document.getElementById('support-view');
+            const onSupport = supportView && !supportView.classList.contains('hidden');
             if (window.location.hash === '#support') {
-                navigateToView('support');
-            } else {
-                navigateToView('portal');
+                if (!onSupport) navigateToView('support');
+            } else if (onSupport) {
+                navigateToView('portal', window.location.hash.slice(1) || null);
             }
         };
 
@@ -891,7 +908,7 @@
     <!-- ======================================================================= -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Firebase Configuration (Project: sts-portal-prod)
@@ -906,132 +923,123 @@
         };
         const appId = "sts-portal-prod"; // used for Firestore paths
 
-        let app, auth, db;
-        let currentUser = null;
-        let firebaseAvailable = false;
+        // The admin account that may post announcements. It must exist in
+        // Firebase Console > Authentication > Users (Email/Password provider),
+        // and must match ADMIN_EMAIL in firestore.rules.
+        const ADMIN_EMAIL = "sooperfast.net@yahoo.com";
 
-        // Initialize Firebase gracefully
-        try {
-            app = initializeApp(firebaseConfig);
-            auth = getAuth(app);
-            db = getFirestore(app);
-            firebaseAvailable = true;
-        } catch (error) {
-            console.error("Firebase Initialization Error:", error);
-            firebaseAvailable = false;
-        }
-
-        if (firebaseAvailable) {
-            // Sign in anonymously – catch and handle 'auth/configuration-not-found'
-            signInAnonymously(auth)
-                .then(() => {
-                    console.log("Firebase Auth: anonymous user connected");
-                })
-                .catch((err) => {
-                    if (err.code === 'auth/configuration-not-found') {
-                        console.warn("Anonymous authentication not enabled in Firebase Console. Please enable it in Authentication > Sign-in methods.");
-                    } else {
-                        console.error("Auth error:", err.code, err.message);
-                    }
-                    // Firebase still works for Firestore reads/writes if auth is optional? Actually Firestore requires auth. So we will disable Firestore features.
-                    firebaseAvailable = false;
-                });
-
-            onAuthStateChanged(auth, (user) => {
-                currentUser = user;
-                if (user && firebaseAvailable) {
-                    registerVisit();
-                    streamLiveAnnouncements();
-                }
-            });
-        } else {
-            console.warn("Firebase not available – running in local-only mode.");
-        }
-
-        // ---- Helper functions that only run if Firebase is properly initialized ----
-        const registerVisit = async () => {
-            if (!currentUser || !firebaseAvailable) return;
-            try {
-                const visitsCol = collection(db, 'artifacts', appId, 'public', 'data', 'visits');
-                await addDoc(visitsCol, {
-                    userId: currentUser.uid,
-                    timestamp: Date.now(),
-                    deviceAgent: navigator.userAgent,
-                    resolution: `${window.innerWidth}x${window.innerHeight}`
-                });
-            } catch (err) {
-                console.error("Visitor analytics error:", err);
+        // Shown when the live board is empty or unreachable.
+        const DEFAULT_ANNOUNCEMENTS = [
+            {
+                title: "Milestone: 10 Organic SEO Clicks Verified",
+                description: "Our search presence is showing active structural signs of life. Deep analytics confirm 10 organic click redirections onto our platform ecosystem over the current 28-day window cycle. Building the foundational STS web system is now officially commenced.",
+                category: "INDEXED",
+                author: "STS_CORE",
+                timestamp: new Date('2026-05-18').getTime()
+            },
+            {
+                title: "SnapNexus Platform Core Locking In",
+                description: "We have rejected temporary social media algorithmic patterns in favor of robust, direct B2B user acquisition models. Focus shifted directly to local event networks in Surat and Ahmedabad, presenting 0-friction QR-to-screen pipelines.",
+                category: "PIVOT APPROVED",
+                author: "STS_DEV",
+                timestamp: new Date('2026-05-15').getTime()
             }
-        };
+        ];
 
-        const streamLiveAnnouncements = () => {
-            if (!currentUser || !firebaseAvailable) return;
-            const announcementsCol = collection(db, 'artifacts', appId, 'public', 'data', 'announcements');
-            onSnapshot(announcementsCol, (snapshot) => {
-                const announcements = [];
-                snapshot.forEach(doc => {
-                    announcements.push({ id: doc.id, ...doc.data() });
-                });
-                announcements.sort((a, b) => b.timestamp - a.timestamp);
-                renderAnnouncements(announcements);
-            }, (error) => {
-                console.error("Announcements real-time error:", error);
-            });
-        };
+        let auth = null, db = null;
+        let currentUser = null;
+        let visitLogged = false;
+        let streamStarted = false;
+
+        const escapeHTML = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        }[c]));
+
+        const pathCol = (name) => collection(db, 'artifacts', appId, 'public', 'data', name);
 
         const renderAnnouncements = (list) => {
             const container = document.getElementById('announcements-container');
             if (!container) return;
+            const items = (list && list.length) ? list : DEFAULT_ANNOUNCEMENTS;
             container.innerHTML = "";
-
-            if (list.length === 0) {
-                const defaults = [
-                    {
-                        title: "Milestone: 10 Organic SEO Clicks Verified",
-                        description: "Our search presence is showing active structural signs of life. Deep analytics confirm 10 organic click redirections onto our platform ecosystem over the current 28-day window cycle. Building the foundational STS web system is now officially commenced.",
-                        category: "INDEXED",
-                        author: "STS_CORE",
-                        timestamp: Date.now() - 86400000
-                    },
-                    {
-                        title: "SnapNexus Platform Core Locking In",
-                        description: "We have rejected temporary social media algorithmic patterns in favor of robust, direct B2B user acquisition models. Focus shifted directly to local event networks in Surat and Ahmedabad, presenting 0-friction QR-to-screen pipelines.",
-                        category: "PIVOT APPROVED",
-                        author: "STS_DEV",
-                        timestamp: Date.now() - (86400000 * 3)
-                    }
-                ];
-                defaults.forEach(item => bootstrapInitialAnnouncement(item));
-                return;
-            }
-
-            list.forEach(item => {
-                const dateObj = new Date(item.timestamp);
-                const formattedDate = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }).toUpperCase();
+            items.forEach(item => {
+                const ts = Number(item.timestamp) || Date.now();
+                const formattedDate = new Date(ts).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }).toUpperCase();
                 const card = document.createElement('div');
                 card.className = "bg-[#121214] border-4 border-black p-6 relative group hover:border-[#2CC7FF] transition-all duration-300 will-change-transform scroll-reactive-card";
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-4">
-                        <span class="bg-[#1A1A1E] text-zinc-400 font-mono text-xs px-2 py-1 border border-zinc-800">${formattedDate}</span>
-                        <span class="text-xs text-[#2CC7FF] font-black uppercase tracking-wider">${item.category || 'TRANSMISSION'}</span>
+                        <span class="bg-[#1A1A1E] text-zinc-400 font-mono text-xs px-2 py-1 border border-zinc-800">${escapeHTML(formattedDate)}</span>
+                        <span class="text-xs text-[#2CC7FF] font-black uppercase tracking-wider">${escapeHTML(item.category || 'TRANSMISSION')}</span>
                     </div>
-                    <h3 class="text-xl font-bold uppercase mb-2 text-white">${item.title}</h3>
-                    <p class="text-zinc-400 text-sm leading-relaxed mb-4">${item.description}</p>
-                    <div class="text-xs text-zinc-600 font-mono">AUTHORIZED BY ${item.author || 'STS_CORE'}</div>
+                    <h3 class="text-xl font-bold uppercase mb-2 text-white">${escapeHTML(item.title)}</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed mb-4 whitespace-pre-line">${escapeHTML(item.description)}</p>
+                    <div class="text-xs text-zinc-600 font-mono">AUTHORIZED BY ${escapeHTML(item.author || 'STS_CORE')}</div>
                 `;
                 container.appendChild(card);
             });
         };
 
-        const bootstrapInitialAnnouncement = async (item) => {
-            if (!firebaseAvailable) return;
-            try {
-                const announcementsCol = collection(db, 'artifacts', appId, 'public', 'data', 'announcements');
-                await addDoc(announcementsCol, item);
-            } catch (err) {}
+        // Announcements are public: stream them without waiting for sign-in.
+        const streamLiveAnnouncements = () => {
+            if (!db || streamStarted) return;
+            streamStarted = true;
+            onSnapshot(pathCol('announcements'), (snapshot) => {
+                const announcements = [];
+                snapshot.forEach(doc => announcements.push({ id: doc.id, ...doc.data() }));
+                announcements.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+                renderAnnouncements(announcements);
+            }, (error) => {
+                console.error("Announcements real-time error:", error);
+                renderAnnouncements([]);
+            });
         };
 
-        // --- Screenshot & Ticket Handlers (only if Firebase available) ---
+        const registerVisit = async () => {
+            if (!currentUser || visitLogged) return;
+            visitLogged = true;
+            try {
+                await addDoc(pathCol('visits'), {
+                    userId: currentUser.uid,
+                    timestamp: Date.now(),
+                    deviceAgent: navigator.userAgent.slice(0, 400),
+                    resolution: `${window.innerWidth}x${window.innerHeight}`
+                });
+            } catch (err) {
+                console.warn("Visitor analytics skipped:", err.code || err);
+            }
+        };
+
+        // Initialize Firebase gracefully
+        try {
+            const app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+        } catch (error) {
+            console.error("Firebase Initialization Error:", error);
+        }
+
+        if (db) {
+            streamLiveAnnouncements();
+            onAuthStateChanged(auth, (user) => {
+                currentUser = user;
+                if (user) registerVisit();
+            });
+            signInAnonymously(auth).catch((err) => {
+                console.warn("Anonymous sign-in failed:", err.code || err);
+            });
+        } else {
+            renderAnnouncements([]);
+        }
+
+        const ensureSignedIn = async () => {
+            if (!auth) throw new Error('offline');
+            if (auth.currentUser) return auth.currentUser;
+            const cred = await signInAnonymously(auth);
+            return cred.user;
+        };
+
+        // --- Screenshot handler ---
         window.processScreenshot = (event) => {
             const file = event.target.files[0];
             if (!file) return;
@@ -1063,110 +1071,93 @@
             reader.readAsDataURL(file);
         };
 
+        const setTicketStatus = (kind, text) => {
+            const feedbackDiv = document.getElementById('ticket-form-status');
+            if (!feedbackDiv) return;
+            const styles = {
+                busy: "bg-[#FFD700] text-black animate-pulse",
+                ok: "bg-[#00FF66] text-black",
+                error: "bg-[#FF007F] text-white"
+            };
+            feedbackDiv.className = `font-mono text-sm px-4 py-3 border-4 border-black font-bold block mb-4 ${styles[kind]}`;
+            feedbackDiv.innerText = text;
+        };
+
         window.handleNewTicket = async (event) => {
             event.preventDefault();
-            if (!firebaseAvailable || !currentUser) {
-                alert("Firebase services are not available. Please try again later.");
-                return;
-            }
-            const feedbackDiv = document.getElementById('ticket-form-status');
             const submitBtn = document.getElementById('ticket-submit-btn');
-            if (feedbackDiv) {
-                feedbackDiv.className = "font-mono text-sm px-4 py-3 border-4 border-black font-bold bg-[#FFD700] text-black block mb-4 animate-pulse";
-                feedbackDiv.innerText = "TRANSMITTING TICKET DATA...";
-                feedbackDiv.classList.remove('hidden');
-            }
+            setTicketStatus('busy', "TRANSMITTING TICKET DATA...");
             if (submitBtn) submitBtn.disabled = true;
             const product = document.getElementById('ticket-product').value;
             const type = document.getElementById('ticket-type').value;
-            const desc = document.getElementById('ticket-desc').value;
-            const email = document.getElementById('ticket-email').value;
+            const desc = document.getElementById('ticket-desc').value.trim();
+            const email = document.getElementById('ticket-email').value.trim();
             try {
-                const ticketsCol = collection(db, 'artifacts', appId, 'public', 'data', 'tickets');
-                await addDoc(ticketsCol, {
-                    product, type, description: desc, email,
-                    screenshot: window.compressedScreenshotBase64,
-                    userId: currentUser.uid,
+                const user = await ensureSignedIn();
+                await addDoc(pathCol('tickets'), {
+                    product, type, description: desc.slice(0, 5000), email,
+                    screenshot: window.compressedScreenshotBase64 || "",
+                    userId: user.uid,
                     timestamp: Date.now(),
                     status: 'open'
                 });
-                if (feedbackDiv) {
-                    feedbackDiv.className = "font-mono text-sm px-4 py-3 border-4 border-black font-bold bg-[#00FF66] text-black block mb-4";
-                    feedbackDiv.innerText = "SUCCESS: TICKET REGISTERED ON STS CENTRAL CORE";
-                }
+                setTicketStatus('ok', "SUCCESS: TICKET REGISTERED ON STS CENTRAL CORE");
                 document.getElementById('ticket-desc').value = "";
                 document.getElementById('ticket-email').value = "";
                 if (typeof window.clearScreenshot === "function") window.clearScreenshot();
-                setTimeout(() => { if (feedbackDiv) feedbackDiv.classList.add('hidden'); }, 5000);
+                setTimeout(() => document.getElementById('ticket-form-status')?.classList.add('hidden'), 5000);
             } catch (err) {
                 console.error("Ticketing error:", err);
-                if (feedbackDiv) {
-                    feedbackDiv.className = "font-mono text-sm px-4 py-3 border-4 border-black font-bold bg-[#FF007F] text-white block mb-4";
-                    feedbackDiv.innerText = "ERROR: FAILURE DELIVERING DATA PACKET";
-                }
+                setTicketStatus('error', "ERROR: TICKET NOT DELIVERED. PLEASE EMAIL " + ADMIN_EMAIL.toUpperCase());
             } finally {
                 if (submitBtn) submitBtn.disabled = false;
             }
         };
 
+        // Announcements are posted by the admin account. The "Admin Passcode"
+        // field is that account's Firebase password; it is never stored in this file.
         window.handleNewAnnouncement = async (event) => {
             event.preventDefault();
-            if (!firebaseAvailable || !currentUser) {
-                alert("Firebase services are not available. Please try again later.");
-                return;
-            }
             const passcode = document.getElementById('ann-passcode').value;
             const errorDiv = document.getElementById('passcode-error');
             const statusDiv = document.getElementById('ann-broadcast-status');
-            if (passcode !== 'sts2026') {
-                if (errorDiv) errorDiv.classList.remove('hidden');
-                return;
-            }
             if (errorDiv) errorDiv.classList.add('hidden');
-            const title = document.getElementById('ann-title').value;
-            const description = document.getElementById('ann-desc').value;
-            const category = document.getElementById('ann-cat').value;
-            const author = document.getElementById('ann-author').value;
             if (statusDiv) {
                 statusDiv.classList.remove('hidden');
                 statusDiv.innerText = "AUTHENTICATING AND SYNCING SECURITY PATHS...";
             }
+            if (!auth) {
+                if (statusDiv) statusDiv.innerText = "DATABASE OFFLINE: RETRY LATER";
+                return;
+            }
             try {
-                const announcementsCol = collection(db, 'artifacts', appId, 'public', 'data', 'announcements');
-                await addDoc(announcementsCol, { title, description, category, author, timestamp: Date.now() });
+                if (!auth.currentUser || auth.currentUser.email !== ADMIN_EMAIL) {
+                    await signInWithEmailAndPassword(auth, ADMIN_EMAIL, passcode);
+                }
+            } catch (err) {
+                console.warn("Admin sign-in failed:", err.code || err);
+                if (statusDiv) statusDiv.classList.add('hidden');
+                if (errorDiv) errorDiv.classList.remove('hidden');
+                return;
+            }
+            try {
+                await addDoc(pathCol('announcements'), {
+                    title: document.getElementById('ann-title').value.trim(),
+                    description: document.getElementById('ann-desc').value.trim(),
+                    category: document.getElementById('ann-cat').value.trim(),
+                    author: document.getElementById('ann-author').value.trim(),
+                    timestamp: Date.now()
+                });
                 document.getElementById('ann-title').value = '';
                 document.getElementById('ann-desc').value = '';
                 document.getElementById('ann-passcode').value = '';
+                if (statusDiv) statusDiv.classList.add('hidden');
                 if (typeof window.closeAnnouncementModal === "function") window.closeAnnouncementModal();
             } catch (err) {
                 console.error("Firestore push error:", err);
-                if (statusDiv) statusDiv.innerText = "DATABASE PERMISSION REJECTED: RETRY SECURE LINK";
-            } finally {
-                setTimeout(() => { if (statusDiv) statusDiv.classList.add('hidden'); }, 4000);
+                if (statusDiv) statusDiv.innerText = "DATABASE PERMISSION REJECTED: CHECK FIRESTORE RULES";
             }
         };
-
-        // If Firebase not available, show a static fallback message and disable ticket/announcement buttons
-        if (!firebaseAvailable) {
-            const container = document.getElementById('announcements-container');
-            if (container && container.innerHTML.includes('Synchronizing')) {
-                container.innerHTML = `
-                    <div class="bg-[#121214] border-4 border-black p-6 relative group">
-                        <div class="flex justify-between items-start mb-4">
-                            <span class="bg-[#1A1A1E] text-zinc-400 font-mono text-xs px-2 py-1 border border-zinc-800">MAY 2026</span>
-                            <span class="text-xs text-[#2CC7FF] font-black uppercase tracking-wider">NOTICE</span>
-                        </div>
-                        <h3 class="text-xl font-bold uppercase mb-2 text-white">Firebase Configuration Pending</h3>
-                        <p class="text-zinc-400 text-sm leading-relaxed mb-4">Anonymous authentication is not enabled. Please enable it in Firebase Console > Authentication.</p>
-                        <div class="text-xs text-zinc-600 font-mono">STS CORE</div>
-                    </div>
-                `;
-            }
-            const addAnnBtn = document.querySelector('#announcements button');
-            if (addAnnBtn) addAnnBtn.disabled = true;
-            const submitTicketBtn = document.getElementById('ticket-submit-btn');
-            if (submitTicketBtn) submitTicketBtn.disabled = true;
-        }
     </script>
 </body>
 </html>
