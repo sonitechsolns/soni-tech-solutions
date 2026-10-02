@@ -151,10 +151,11 @@
             <span class="classic-serif text-3xl font-bold text-black select-none tracking-tight">STS</span>
             <span class="hidden md:inline-block bg-black text-[#2CC7FF] font-mono text-xs px-2 py-1 uppercase tracking-widest font-bold border border-black">SONI TECH SOLUTIONS</span>
         </div>
-        <div class="flex gap-4 items-center">
-            <a href="#projects" onclick="navigateToView('portal', 'projects')" class="font-bold text-black hover:underline uppercase text-sm tracking-wider">PROJECTS</a>
-            <a href="#support" class="font-bold text-black hover:underline uppercase text-sm tracking-wider">CONNECT</a>
-            <a href="#announcements" onclick="navigateToView('portal', 'announcements')" class="font-bold text-black hover:underline uppercase text-sm tracking-wider font-mono">LIVE FEED</a>
+        <div class="flex gap-3 sm:gap-4 items-center">
+            <a href="#projects" onclick="navigateToView('portal', 'projects')" class="font-bold text-black hover:underline uppercase text-xs sm:text-sm tracking-wider">PROJECTS</a>
+            <a href="#about" onclick="navigateToView('portal', 'about')" class="font-bold text-black hover:underline uppercase text-xs sm:text-sm tracking-wider">ABOUT</a>
+            <a href="#support" class="font-bold text-black hover:underline uppercase text-xs sm:text-sm tracking-wider">CONNECT</a>
+            <a href="#announcements" onclick="navigateToView('portal', 'announcements')" class="hidden sm:inline font-bold text-black hover:underline uppercase text-sm tracking-wider font-mono">LIVE FEED</a>
             <button onclick="toggleVisualMode()" class="bg-black text-white p-2 border-2 border-black hover:bg-white hover:text-black transition-colors" title="Toggle Interactive Accents">
                 <i class="fa-solid fa-palette"></i>
             </button>
@@ -293,6 +294,130 @@
                         <button onclick="showDemoModal('sparshika')" class="border-[3px] border-zinc-700 hover:border-white transition-colors py-3 px-6 uppercase font-bold text-sm tracking-wider">
                             Quick Status
                         </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ORIGIN / ABOUT SECTION -->
+        <section id="about" class="relative z-20 py-24 px-6 md:px-12 bg-[#121214] border-t-8 border-black overflow-hidden">
+
+            <div class="absolute top-[8%] right-[6%] w-28 h-28 border-4 border-zinc-800 rotate-12 pointer-events-none"></div>
+            <div class="absolute bottom-[10%] left-[4%] w-40 h-40 bg-[#FF007F]/5 rounded-full blur-2xl pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto relative z-10">
+
+                <div class="mb-16">
+                    <div class="inline-block bg-[#FFD700] text-black border-4 border-black px-6 py-3 font-black text-2xl uppercase tracking-wider mb-4 shadow-[4px_4px_0px_#000]">
+                        THE ORIGIN
+                    </div>
+                    <h2 class="text-4xl md:text-6xl font-black uppercase tracking-tight text-white">
+                        HOW STS STARTED
+                    </h2>
+                    <p class="text-gray-400 mt-2 max-w-2xl font-medium">
+                        No office, no investors, no team page to pad out. Soni Tech Solutions is one student founder building real products, in public, one shipped feature at a time.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-5 gap-12">
+
+                    <!-- Founder card -->
+                    <div class="lg:col-span-2">
+                        <div class="matte-card p-8">
+                            <div class="flex items-center gap-5 mb-6">
+                                <div class="w-20 h-20 shrink-0 bg-[#2CC7FF] border-4 border-black flex items-center justify-center shadow-[4px_4px_0px_#000]" style="background-color: var(--cyan-brand)">
+                                    <span class="classic-serif text-4xl font-bold text-black select-none">BS</span>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-mono font-bold bg-black text-[#2CC7FF] px-2 py-1 uppercase tracking-widest border border-zinc-800">FOUNDER</span>
+                                    <h3 class="text-2xl md:text-3xl font-black uppercase tracking-tight mt-2">Bhavya Soni</h3>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 leading-relaxed mb-4">
+                                From Surat, now studying B.Tech in Computer Engineering at NMIMS MPSTME, Mumbai. I started STS to put the things I build under one roof, and to turn them into products people actually pay for.
+                            </p>
+                            <p class="text-gray-400 leading-relaxed mb-6">
+                                Every product here is designed, coded, deployed and sold by me. My toolkit: Python, JavaScript and Three.js, C, Linux, networking and server administration.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-8">
+                                <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">Python</span>
+                                <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">JavaScript</span>
+                                <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">Three.js</span>
+                                <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">C</span>
+                                <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">Linux</span>
+                                <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">Networking</span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <a href="mailto:sooperfast.net@yahoo.com" class="brutalist-btn text-center font-black py-3 px-6 uppercase tracking-wider text-sm flex-1 flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-envelope"></i>
+                                    <span>EMAIL ME</span>
+                                </a>
+                                <a href="https://github.com/sonitechsolns" target="_blank" rel="noopener" class="border-[3px] border-zinc-700 hover:border-white transition-colors py-3 px-6 uppercase font-bold text-sm tracking-wider flex items-center justify-center gap-2">
+                                    <i class="fa-brands fa-github"></i>
+                                    <span>GITHUB</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline -->
+                    <div class="lg:col-span-3">
+                        <span class="text-xs font-mono font-black uppercase tracking-widest text-[#FF007F]">TIMELINE // 2026</span>
+                        <ol class="mt-6 border-l-4 border-black space-y-8">
+                            <li class="relative pl-8">
+                                <span class="absolute -left-[14px] top-1 w-6 h-6 bg-[#2CC7FF] border-4 border-black" style="background-color: var(--cyan-brand)"></span>
+                                <span class="font-mono text-xs text-zinc-500 uppercase tracking-widest">May 2026</span>
+                                <h4 class="text-xl font-black uppercase mt-1">The umbrella goes up</h4>
+                                <p class="text-zinc-400 text-sm leading-relaxed mt-1">Soni Tech Solutions gets its own portal, and SnapNexus drops the social-media chase to sell directly to event organisers in Surat and Ahmedabad.</p>
+                            </li>
+                            <li class="relative pl-8">
+                                <span class="absolute -left-[14px] top-1 w-6 h-6 bg-[#FF007F] border-4 border-black"></span>
+                                <span class="font-mono text-xs text-zinc-500 uppercase tracking-widest">June 2026</span>
+                                <h4 class="text-xl font-black uppercase mt-1">Sparshika wakes up</h4>
+                                <p class="text-zinc-400 text-sm leading-relaxed mt-1">The first 3D model of a server rack is built in Three.js, with every component modelled in Blender to real rack dimensions.</p>
+                            </li>
+                            <li class="relative pl-8">
+                                <span class="absolute -left-[14px] top-1 w-6 h-6 bg-[#FF5E00] border-4 border-black"></span>
+                                <span class="font-mono text-xs text-zinc-500 uppercase tracking-widest">July 2026</span>
+                                <h4 class="text-xl font-black uppercase mt-1">From desktop app to cloud</h4>
+                                <p class="text-zinc-400 text-sm leading-relaxed mt-1">Sparshika is rebuilt from an Electron desktop app into a cloud platform: an on-site agent that reads real hardware sensors, a cloud API, and a live 3D dashboard.</p>
+                            </li>
+                            <li class="relative pl-8">
+                                <span class="absolute -left-[14px] top-1 w-6 h-6 bg-[#FFD700] border-4 border-black"></span>
+                                <span class="font-mono text-xs text-zinc-500 uppercase tracking-widest">September 2026</span>
+                                <h4 class="text-xl font-black uppercase mt-1">SnapNexus v2</h4>
+                                <p class="text-zinc-400 text-sm leading-relaxed mt-1">A ground-up rebuild of SnapNexus: simple UPI payments from ₹49 per event, a free trial, and new layouts for the live photo wall.</p>
+                            </li>
+                            <li class="relative pl-8">
+                                <span class="absolute -left-[14px] top-1 w-6 h-6 bg-white border-4 border-black animate-pulse"></span>
+                                <span class="font-mono text-xs text-zinc-500 uppercase tracking-widest">Now</span>
+                                <h4 class="text-xl font-black uppercase mt-1">Chasing the first customers</h4>
+                                <p class="text-zinc-400 text-sm leading-relaxed mt-1">Taking SnapNexus to real events and opening Sparshika to its first datacenters. Follow along in the live feed below.</p>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- How we build -->
+                <div class="mt-20">
+                    <span class="text-xs font-mono font-black uppercase tracking-widest text-[#2CC7FF]" style="color: var(--cyan-brand)">HOW WE BUILD</span>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
+                        <div class="matte-card p-6">
+                            <i class="fa-solid fa-hammer text-2xl text-[#FFD700] mb-4"></i>
+                            <h4 class="text-lg font-black uppercase mb-2">Ship it, then talk about it</h4>
+                            <p class="text-zinc-400 text-sm leading-relaxed">No roadmap hype for features that don't exist. If it's on this site, you can open it and use it.</p>
+                        </div>
+                        <div class="matte-card p-6">
+                            <i class="fa-solid fa-bolt text-2xl text-[#FF007F] mb-4"></i>
+                            <h4 class="text-lg font-black uppercase mb-2">Start from real friction</h4>
+                            <p class="text-zinc-400 text-sm leading-relaxed">Every product starts from a problem someone actually hits, like guests' event photos getting lost in WhatsApp groups.</p>
+                        </div>
+                        <div class="matte-card p-6">
+                            <i class="fa-solid fa-feather text-2xl text-[#2CC7FF] mb-4" style="color: var(--cyan-brand)"></i>
+                            <h4 class="text-lg font-black uppercase mb-2">Lean by design</h4>
+                            <p class="text-zinc-400 text-sm leading-relaxed">Lightweight code on lean infrastructure. That keeps the products fast and the prices low.</p>
+                        </div>
                     </div>
                 </div>
 
@@ -474,12 +599,14 @@
                 </p>
             </div>
             
-            <div class="flex gap-6 text-sm font-black uppercase tracking-wider">
+            <div class="flex flex-wrap justify-center gap-x-4 gap-y-2 sm:gap-6 text-sm font-black uppercase tracking-wider">
                 <a href="https://snapnexus.in" target="_blank" class="hover:underline">SnapNexus</a>
                 <span class="text-black">/</span>
                 <a href="https://sparshika-1c56d.web.app/" target="_blank" class="hover:underline">Sparshika</a>
                 <span class="text-black">/</span>
                 <a href="#projects" onclick="navigateToView('portal', 'projects')" class="hover:underline">Portfolio</a>
+                <span class="text-black">/</span>
+                <a href="#about" onclick="navigateToView('portal', 'about')" class="hover:underline">About</a>
             </div>
         </div>
     </footer>
