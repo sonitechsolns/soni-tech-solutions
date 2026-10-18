@@ -172,6 +172,33 @@
             scroll-padding-top: 80px;
         }
 
+        /* Draggable hero stickers */
+        .sticker {
+            position: absolute;
+            pointer-events: auto;
+            touch-action: none;
+            user-select: none;
+            cursor: grab;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 0.12em;
+            padding: 0.7rem 1.1rem;
+            border: 4px solid #000;
+            box-shadow: 6px 6px 0 #000;
+            transform: translate(var(--x, 0px), var(--y, 0px)) rotate(var(--r, 0deg));
+            transition: box-shadow 0.15s ease-out, transform 0.15s ease-out;
+            white-space: nowrap;
+        }
+        .sticker:hover { box-shadow: 8px 8px 0 #000; }
+        .sticker.is-dragging {
+            cursor: grabbing;
+            box-shadow: 14px 14px 0 #000;
+            transform: translate(var(--x, 0px), var(--y, 0px)) rotate(0deg) scale(1.06);
+            transition: box-shadow 0.15s ease-out;
+        }
+        .sticker:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
         .will-change-transform {
             will-change: transform;
         }
@@ -207,6 +234,21 @@
             <div class="absolute top-[20%] left-[10%] w-16 h-16 bg-black rotate-12 parallax-bg pointer-events-none" id="shard-1"></div>
             <div class="absolute bottom-[30%] right-[15%] w-24 h-24 bg-transparent border-4 border-black -rotate-45 parallax-bg pointer-events-none" id="shard-2"></div>
             <div class="absolute top-[40%] right-[12%] w-12 h-12 bg-black rounded-full parallax-bg pointer-events-none" id="shard-3"></div>
+            <!-- Draggable stickers (desktop and tablet). Click a product sticker to jump to it. -->
+            <div id="hero-stickers" class="hidden lg:block absolute inset-0 z-20 pointer-events-none" aria-label="Draggable stickers">
+                <button type="button" class="sticker bg-black text-white" style="left:5%; top:44%; --r:-6deg" data-target="card-snapnexus" aria-label="SnapNexus: drag me, or click to see the project">
+                    SNAPNEXUS <i class="fa-solid fa-arrow-down ml-1"></i>
+                </button>
+                <button type="button" class="sticker bg-[#FF007F] text-white" style="right:5%; top:60%; --r:5deg" data-target="card-sparshika" aria-label="Sparshika: drag me, or click to see the project">
+                    SPARSHIKA <i class="fa-solid fa-arrow-down ml-1"></i>
+                </button>
+                <div class="sticker bg-[#FFD700] text-black" style="right:20%; top:18%; --r:8deg" aria-hidden="true">
+                    <i class="fa-solid fa-hand mr-1"></i> DRAG ME
+                </div>
+                <div class="sticker bg-white text-black" style="left:9%; bottom:16%; --r:-3deg" aria-hidden="true">
+                    EST. 2026
+                </div>
+            </div>
 
             <!-- The STS Master Outline -->
             <div class="sts-logo-container scale-110 md:scale-125 select-none transition-transform duration-300" id="logo-parallax-parent">
@@ -1000,6 +1042,74 @@
                 navigateToView('portal', window.location.hash.slice(1) || null);
             }
         };
+
+        // =======================================================================
+        // DRAGGABLE HERO STICKERS
+        // =======================================================================
+        (() => {
+            const stickers = document.querySelectorAll('#hero-stickers .sticker');
+            let topZ = 30;
+            stickers.forEach((el) => {
+                let startX = 0, startY = 0, baseX = 0, baseY = 0, moved = false, active = false;
+                el.addEventListener('pointerdown', (e) => {
+                    if (e.button !== 0) return;
+                    active = true; moved = false;
+                    startX = e.clientX; startY = e.clientY;
+                    baseX = parseFloat(el.style.getPropertyValue('--x')) || 0;
+                    baseY = parseFloat(el.style.getPropertyValue('--y')) || 0;
+                    el.style.zIndex = ++topZ;
+                    el.setPointerCapture(e.pointerId);
+                });
+                el.addEventListener('pointermove', (e) => {
+                    if (!active) return;
+                    const dx = e.clientX - startX, dy = e.clientY - startY;
+                    if (!moved && Math.hypot(dx, dy) < 4) return;
+                    if (!moved) { moved = true; el.classList.add('is-dragging'); }
+                    // Keep the sticker inside the hero
+                    const hero = document.getElementById('hero-canvas').getBoundingClientRect();
+                    const r = el.getBoundingClientRect();
+                    const curX = parseFloat(el.style.getPropertyValue('--x')) || 0;
+                    const curY = parseFloat(el.style.getPropertyValue('--y')) || 0;
+                    let nx = baseX + dx, ny = baseY + dy;
+                    const left = r.left - curX + nx, top = r.top - curY + ny;
+                    if (left < hero.left + 8) nx += hero.left + 8 - left;
+                    if (left + r.width > hero.right - 8) nx -= left + r.width - (hero.right - 8);
+                    if (top < hero.top + 72) ny += hero.top + 72 - top;
+                    if (top + r.height > hero.bottom - 8) ny -= top + r.height - (hero.bottom - 8);
+                    el.style.setProperty('--x', nx + 'px');
+                    el.style.setProperty('--y', ny + 'px');
+                });
+                const end = () => {
+                    if (!active) return;
+                    active = false;
+                    el.classList.remove('is-dragging');
+                    if (moved) {
+                        // Stickers may not cover the STS logo or the headline: bounce back if dropped there
+                        const r = el.getBoundingClientRect();
+                        const keepClear = ['s1-letter', 't-letter', 's2-letter'].map(id => document.getElementById(id))
+                            .concat([...document.querySelectorAll('#title-parallax h1, #title-parallax h2, #title-parallax p')])
+                            .map(n => n.getBoundingClientRect());
+                        const blocked = keepClear.some(b => r.left < b.right && r.right > b.left && r.top < b.bottom && r.bottom > b.top);
+                        if (blocked) {
+                            el.style.transition = 'transform 0.35s cubic-bezier(.34,1.56,.64,1), box-shadow 0.15s ease-out';
+                            el.style.setProperty('--x', baseX + 'px');
+                            el.style.setProperty('--y', baseY + 'px');
+                            setTimeout(() => { el.style.transition = ''; }, 400);
+                        } else {
+                            // Land at a new random tilt, like a sticker slapped down
+                            el.style.setProperty('--r', (Math.random() * 14 - 7).toFixed(1) + 'deg');
+                        }
+                    }
+                };
+                el.addEventListener('pointerup', end);
+                el.addEventListener('pointercancel', end);
+                el.addEventListener('click', (e) => {
+                    if (moved) { e.preventDefault(); moved = false; return; }
+                    const target = el.dataset.target && document.getElementById(el.dataset.target);
+                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                });
+            });
+        })();
 
         // Bootstrap visual events
         window.addEventListener('resize', updateResponsiveLayout);
