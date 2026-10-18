@@ -55,6 +55,18 @@
         }
 
         /* Fallbacks to prevent stacking on load before JS executes */
+        @media (max-width: 640px) {
+            .sts-logo-container { height: 230px; }
+        }
+
+        @media (min-width: 641px) and (max-height: 820px) {
+            .sts-logo-container { height: 240px; }
+        }
+
+        @media (max-height: 600px) {
+            #scroll-hint { display: none; }
+        }
+
         .letter-s1 {
             transform: translate(-95px, 0px);
             z-index: 10;
@@ -192,16 +204,11 @@
                 <p class="text-xs md:text-sm font-bold text-black opacity-90 uppercase tracking-widest font-mono">
                     The Umbrella of High-Friction Digital Innovations
                 </p>
-                <div class="mt-6 flex justify-center gap-4">
-                    <button onclick="navigateToView('support')" class="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-black px-6 py-3 uppercase tracking-wider text-xs transition-colors">
-                        Raise an Issue <i class="fa-solid fa-circle-exclamation ml-1"></i>
-                    </button>
-                </div>
             </div>
 
-            <div class="absolute bottom-12 flex flex-col items-center gap-3 z-30">
+            <div id="scroll-hint" class="absolute bottom-5 sm:bottom-12 flex flex-col items-center gap-2 sm:gap-3 z-30">
                 <span class="text-xs uppercase font-bold text-black tracking-widest animate-bounce">Scroll down to Explore</span>
-                <div class="w-1 h-12 bg-black rounded-full relative overflow-hidden">
+                <div class="w-1 h-8 sm:h-12 bg-black rounded-full relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-1/2 bg-[#FF007F] animate-ping"></div>
                 </div>
             </div>
