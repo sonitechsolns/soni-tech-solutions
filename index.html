@@ -3,9 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soni Tech Solutions — Building the Nexus</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Soni Tech Solutions | Bhavyakumar Soni</title>
+    <meta name="description" content="Soni Tech Solutions is the studio of Bhavyakumar Soni, a student founder building SnapNexus (live photo walls for events) and Sparshika (live 3D twins for datacenters).">
+    <meta name="author" content="Bhavyakumar Soni">
+    <meta name="theme-color" content="#2CC7FF">
+    <link rel="canonical" href="https://soni-tech-solutions.vercel.app/">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+    <!-- Link previews (LinkedIn, WhatsApp, X) -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Soni Tech Solutions">
+    <meta property="og:url" content="https://soni-tech-solutions.vercel.app/">
+    <meta property="og:title" content="Soni Tech Solutions | Bhavyakumar Soni">
+    <meta property="og:description" content="Two products, both live: SnapNexus, a live photo wall for events, and Sparshika, a live 3D twin for datacenters. Built end to end by one student founder.">
+    <meta property="og:image" content="https://soni-tech-solutions.vercel.app/assets/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Soni Tech Solutions: SnapNexus and Sparshika, by Bhavyakumar Soni">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Soni Tech Solutions | Bhavyakumar Soni">
+    <meta name="twitter:description" content="SnapNexus and Sparshika, built end to end by one student founder.">
+    <meta name="twitter:image" content="https://soni-tech-solutions.vercel.app/assets/og-image.png">
+
+    <!-- Tailwind CSS, compiled (run "npm run build:css" after changing classes) -->
+    <link rel="stylesheet" href="assets/styles.css">
     <!-- Google Fonts: Cormorant Garamond (Classic Serif) & Space Grotesk (Modern Bold Sans) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -202,7 +224,7 @@
                     BUILD THE NEXUS.
                 </h2>
                 <p class="text-xs md:text-sm font-bold text-black opacity-90 uppercase tracking-widest font-mono">
-                    The Umbrella of High-Friction Digital Innovations
+                    SnapNexus · Sparshika · and what comes next
                 </p>
             </div>
 
@@ -228,79 +250,110 @@
                     THE STS PRODUCTS
                 </h2>
                 <p class="text-gray-400 mt-2 max-w-2xl font-medium">
-                    We design and maintain software architectures focusing on high-impact crowd engagement, modern design patterns, and absolute reliability under the Soni Tech Solutions banner.
+                    Two products, both live. Each one designed, coded, deployed and sold end to end by one founder.
                 </p>
             </div>
 
             <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10">
                 
                 <!-- PROJECT 1: SNAPNEXUS -->
-                <div id="card-snapnexus" class="matte-card-cyan rounded-none p-8 flex flex-col justify-between group will-change-transform transition-transform duration-75 ease-out">
+                <div id="card-snapnexus" class="matte-card-cyan rounded-none p-6 sm:p-8 flex flex-col justify-between group will-change-transform transition-transform duration-75 ease-out">
                     <div>
-                        <div class="flex justify-between items-start mb-6">
+                        <div class="flex justify-between items-start gap-4 mb-6">
                             <span class="text-xs font-mono font-bold bg-[#2CC7FF] text-black px-3 py-1 uppercase tracking-widest">LIVE EVENT PLATFORM</span>
-                            <span class="text-gray-500 font-mono text-xs">SNAPNXS // 01</span>
+                            <span class="text-gray-500 font-mono text-xs whitespace-nowrap">SNAPNXS // 01</span>
                         </div>
-                        
-                        <h3 class="text-3xl md:text-4xl font-black uppercase mb-4 tracking-tight group-hover:text-[#2CC7FF] transition-colors">
+
+                        <a href="https://snapnexus.in" target="_blank" rel="noopener" class="block mb-6 border-4 border-black overflow-hidden bg-black" aria-label="Open SnapNexus">
+                            <img src="assets/snapnexus.jpg" alt="SnapNexus landing page: guests scan a QR code and their photos appear on a live event wall" width="1200" height="750" loading="lazy" class="w-full h-auto block transition-transform duration-500 group-hover:scale-[1.03]">
+                        </a>
+
+                        <h3 class="text-3xl md:text-4xl font-black uppercase mb-3 tracking-tight group-hover:text-[#2CC7FF] transition-colors">
                             SNAPNEXUS
                         </h3>
-                        
-                        <p class="text-gray-300 mb-6 leading-relaxed">
-                            The ultimate live photo management ecosystem for event managers. Turn static displays into interactive, user-generated real-time TV galleries. Features built-in smart curation, seamless uploads via zero-friction custom table QR codes, and integrated monetization pipelines.
+
+                        <p class="text-gray-300 mb-5 leading-relaxed">
+                            A live photo wall for weddings, parties and college events. Guests scan a QR code, snap a photo, and it appears on the venue's TV or projector within seconds. No app to install, no account to create, and the host gets every photo at the end of the night.
                         </p>
 
+                        <span class="block text-xs font-mono font-black uppercase tracking-widest text-zinc-500 mb-3">WHAT I BUILT</span>
+                        <ul class="space-y-2 mb-6 text-sm text-zinc-300">
+                            <li class="flex gap-3"><i class="fa-solid fa-square text-[6px] mt-2 text-[#2CC7FF]" style="color: var(--cyan-brand)"></i><span>Guest upload page, host dashboard and live TV wall with five layouts</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-square text-[6px] mt-2 text-[#2CC7FF]" style="color: var(--cyan-brand)"></i><span>Photo moderation, private groups and one-click ZIP download of every photo</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-square text-[6px] mt-2 text-[#2CC7FF]" style="color: var(--cyan-brand)"></i><span>UPI checkout with a free 1-hour trial, ₹49 per event and a ₹999/month Pro plan</span></li>
+                        </ul>
+
                         <div class="flex flex-wrap gap-2 mb-8">
-                            <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">Fast Uploads</span>
-                            <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">Live TV Slider</span>
-                            <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">Admin Control</span>
-                            <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">UPI Payments</span>
+                            <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">JavaScript</span>
+                            <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">Appwrite</span>
+                            <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">HTML5 Canvas</span>
+                            <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">UPI</span>
+                            <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">PostHog</span>
                         </div>
                     </div>
 
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="https://snapnexus.in" target="_blank" class="brutalist-btn text-center font-black py-3 px-6 uppercase tracking-wider text-sm flex-1 flex items-center justify-center gap-2">
-                            <span>LAUNCH SNAPNEXUS</span>
+                    <div class="grid grid-cols-2 sm:flex gap-3 sm:gap-4">
+                        <a href="https://snapnexus.in" target="_blank" rel="noopener" class="brutalist-btn col-span-2 text-center font-black py-3 px-6 uppercase tracking-wider text-sm sm:flex-1 flex items-center justify-center gap-2">
+                            <span>OPEN SNAPNEXUS</span>
                             <i class="fa-solid fa-arrow-up-right-from-square"></i>
                         </a>
-                        <button onclick="showDemoModal('snapnexus')" class="border-[3px] border-zinc-700 hover:border-white transition-colors py-3 px-6 uppercase font-bold text-sm tracking-wider">
-                            Quick Status
+                        <button onclick="showDemoModal('snapnexus')" class="border-[3px] border-zinc-700 hover:border-white transition-colors py-3 px-4 uppercase font-bold text-sm tracking-wider">
+                            Details
                         </button>
+                        <a href="https://github.com/sonitechsolns/snapnexus." target="_blank" rel="noopener" class="border-[3px] border-zinc-700 hover:border-white transition-colors py-3 px-4 uppercase font-bold text-sm tracking-wider flex items-center justify-center gap-2" aria-label="SnapNexus source code on GitHub">
+                            <i class="fa-brands fa-github"></i><span>Code</span>
+                        </a>
                     </div>
                 </div>
 
                 <!-- PROJECT 2: SPARSHIKA -->
-                <div id="card-sparshika" class="matte-card-pink rounded-none p-8 flex flex-col justify-between group will-change-transform transition-transform duration-75 ease-out">
+                <div id="card-sparshika" class="matte-card-pink rounded-none p-6 sm:p-8 flex flex-col justify-between group will-change-transform transition-transform duration-75 ease-out">
                     <div>
-                        <div class="flex justify-between items-start mb-6">
-                            <span class="text-xs font-mono font-bold bg-[#FF007F] text-white px-3 py-1 uppercase tracking-widest">UTILITY SYSTEM</span>
-                            <span class="text-gray-500 font-mono text-xs">SPARSHIKA // 02</span>
+                        <div class="flex justify-between items-start gap-4 mb-6">
+                            <span class="text-xs font-mono font-bold bg-[#FF007F] text-white px-3 py-1 uppercase tracking-widest">DATACENTER 3D TWIN</span>
+                            <span class="text-gray-500 font-mono text-xs whitespace-nowrap">SPARSHIKA // 02</span>
                         </div>
-                        
-                        <h3 class="text-3xl md:text-4xl font-black uppercase mb-4 tracking-tight group-hover:text-[#FF007F] transition-colors">
+
+                        <a href="https://sparshika3d.vercel.app/demo" target="_blank" rel="noopener" class="block mb-6 border-4 border-black overflow-hidden bg-black" aria-label="Walk the Sparshika demo hall">
+                            <img src="assets/sparshika.jpg" alt="Sparshika demo hall: a server opened in 3D with its failed fan highlighted and live readings in a side panel" width="1200" height="750" loading="lazy" class="w-full h-auto block transition-transform duration-500 group-hover:scale-[1.03]">
+                        </a>
+
+                        <h3 class="text-3xl md:text-4xl font-black uppercase mb-3 tracking-tight group-hover:text-[#FF007F] transition-colors">
                             SPARSHIKA
                         </h3>
-                        
-                        <p class="text-gray-300 mb-6 leading-relaxed">
-                            An advanced technological division tailored to modular network distribution and dynamic analytics processing. Seamless integration, high-performance database management systems, and proprietary developer tooling models.
+
+                        <p class="text-gray-300 mb-5 leading-relaxed">
+                            A live 3D copy of a datacenter, built from the hardware itself. When a fan slows down or a power supply fails, Sparshika shows exactly which part, in which rack, and flies you straight to it. <span class="text-zinc-500">"Sparsha" means touch.</span>
                         </p>
 
+                        <span class="block text-xs font-mono font-black uppercase tracking-widest text-zinc-500 mb-3">WHAT I BUILT</span>
+                        <ul class="space-y-2 mb-6 text-sm text-zinc-300">
+                            <li class="flex gap-3"><i class="fa-solid fa-square text-[6px] mt-2 text-[#FF007F]"></i><span>A walkable 3D hall of server racks, with failing parts, cabling and a heat map</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-square text-[6px] mt-2 text-[#FF007F]"></i><span>An on-site agent that reads real server sensors (IPMI, SNMP) and reports to a cloud API</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-square text-[6px] mt-2 text-[#FF007F]"></i><span>Sign-up with STS approval, one-time agent enrolment codes and team roles</span></li>
+                        </ul>
+
                         <div class="flex flex-wrap gap-2 mb-8">
-                            <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">API Gateway</span>
-                            <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">Serverless Architecture</span>
-                            <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">Edge Analytics</span>
-                            <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">Custom Tooling</span>
+                            <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">React</span>
+                            <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">Three.js</span>
+                            <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">Blender</span>
+                            <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">FastAPI</span>
+                            <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">Supabase</span>
+                            <span class="bg-[#1A1A1E] text-xs font-mono px-3 py-1 border border-zinc-800 text-zinc-300">Python</span>
                         </div>
                     </div>
 
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="https://sparshika-1c56d.web.app/" target="_blank" class="brutalist-btn text-center font-black py-3 px-6 uppercase tracking-wider text-sm flex-1 flex items-center justify-center gap-2" style="box-shadow: 4px 4px 0px var(--neon-pink)">
-                            <span>LAUNCH SPARSHIKA</span>
+                    <div class="grid grid-cols-2 sm:flex gap-3 sm:gap-4">
+                        <a href="https://sparshika3d.vercel.app/demo" target="_blank" rel="noopener" class="brutalist-btn col-span-2 text-center font-black py-3 px-6 uppercase tracking-wider text-sm sm:flex-1 flex items-center justify-center gap-2" style="box-shadow: 4px 4px 0px var(--neon-pink)">
+                            <span>WALK THE DEMO HALL</span>
                             <i class="fa-solid fa-arrow-up-right-from-square"></i>
                         </a>
-                        <button onclick="showDemoModal('sparshika')" class="border-[3px] border-zinc-700 hover:border-white transition-colors py-3 px-6 uppercase font-bold text-sm tracking-wider">
-                            Quick Status
+                        <button onclick="showDemoModal('sparshika')" class="border-[3px] border-zinc-700 hover:border-white transition-colors py-3 px-4 uppercase font-bold text-sm tracking-wider">
+                            Details
                         </button>
+                        <a href="https://github.com/sonitechsolns/sparshika3d" target="_blank" rel="noopener" class="border-[3px] border-zinc-700 hover:border-white transition-colors py-3 px-4 uppercase font-bold text-sm tracking-wider flex items-center justify-center gap-2" aria-label="Sparshika 3D source code on GitHub">
+                            <i class="fa-brands fa-github"></i><span>Code</span>
+                        </a>
                     </div>
                 </div>
 
@@ -490,7 +543,7 @@
                             STS ANNOUNCEMENTS
                         </h2>
                     </div>
-                    <button onclick="openAnnouncementModal()" class="bg-[#2CC7FF] hover:bg-white text-black font-black px-6 py-3 border-4 border-black shadow-[4px_4px_0px_#000] active:translate-y-1 hover:shadow-[2px_2px_0px_#000] transition-all text-sm tracking-wider uppercase">
+                    <button id="add-announcement-btn" onclick="openAnnouncementModal()" class="hidden bg-[#2CC7FF] hover:bg-white text-black font-black px-6 py-3 border-4 border-black shadow-[4px_4px_0px_#000] active:translate-y-1 hover:shadow-[2px_2px_0px_#000] transition-all text-sm tracking-wider uppercase">
                         Add Announcement
                     </button>
                 </div>
@@ -605,15 +658,16 @@
             <div class="text-center md:text-left">
                 <span class="classic-serif text-4xl font-black tracking-tighter select-none">STS</span>
                 <p class="text-lg font-black uppercase tracking-wide mt-1">Soni Tech Solutions</p>
+                <p class="text-sm font-bold mt-1">Built by Bhavyakumar Soni</p>
                 <p class="text-xs uppercase font-bold tracking-widest mt-1 font-mono opacity-80">
-                    BUILD THE NEXUS © 2026. ALL RIGHTS SECURED.
+                    © 2026 Soni Tech Solutions. All rights reserved.
                 </p>
             </div>
             
             <div class="flex flex-wrap justify-center gap-x-4 gap-y-2 sm:gap-6 text-sm font-black uppercase tracking-wider">
                 <a href="https://snapnexus.in" target="_blank" class="hover:underline">SnapNexus</a>
                 <span class="text-black">/</span>
-                <a href="https://sparshika-1c56d.web.app/" target="_blank" class="hover:underline">Sparshika</a>
+                <a href="https://sparshika3d.vercel.app/" target="_blank" rel="noopener" class="hover:underline">Sparshika</a>
                 <span class="text-black">/</span>
                 <a href="#projects" onclick="navigateToView('portal', 'projects')" class="hover:underline">Portfolio</a>
                 <span class="text-black">/</span>
@@ -624,7 +678,7 @@
 
     <!-- DEMO MODAL -->
     <div id="demo-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-[#121214] border-8 border-black max-w-md w-full p-8 relative shadow-[12px_12px_0px_#2CC7FF]" id="modal-box">
+        <div class="bg-[#121214] border-8 border-black max-w-lg w-full p-6 sm:p-8 relative shadow-[12px_12px_0px_#2CC7FF] max-h-[90vh] overflow-y-auto" id="modal-box">
             <button onclick="closeDemoModal()" class="absolute top-4 right-4 text-white hover:text-[#2CC7FF] text-2xl">
                 <i class="fa-solid fa-xmark"></i>
             </button>
@@ -805,68 +859,99 @@
             }
         }
 
+        const PROJECT_FACTS = {
+            snapnexus: {
+                accent: 'var(--cyan-brand)',
+                badge: 'bg-[#2CC7FF] text-black',
+                label: 'PROJECT FACTS',
+                title: 'SnapNexus',
+                rows: [
+                    ['Status', 'Live at snapnexus.in'],
+                    ['Stage', 'Early stage, looking for its first paid events'],
+                    ['Pricing', 'Free 1-hour trial · ₹49 per event · ₹999/month Pro'],
+                    ['Payments', 'UPI, confirmed by hand for now'],
+                    ['Frontend', 'HTML, CSS and plain JavaScript, no framework'],
+                    ['Backend', 'Appwrite: sign-in, database and photo storage'],
+                    ['Hosting', 'GitHub Pages']
+                ],
+                links: [
+                    ['Open SnapNexus', 'https://snapnexus.in'],
+                    ['Source code', 'https://github.com/sonitechsolns/snapnexus.']
+                ]
+            },
+            sparshika: {
+                accent: 'var(--neon-pink)',
+                badge: 'bg-[#FF007F] text-white',
+                label: 'PROJECT FACTS',
+                title: 'Sparshika',
+                rows: [
+                    ['Status', 'Live site and demo hall'],
+                    ['Stage', 'Early access: datacenters can register and are approved by STS'],
+                    ['Demo data', 'The public demo hall runs on simulated readings'],
+                    ['3D frontend', 'React and Three.js (React Three Fiber), hosted on Vercel'],
+                    ['Cloud API', 'FastAPI on Render, with Supabase (PostgreSQL)'],
+                    ['On-site agent', 'Python, reading servers over IPMI and network gear over SNMP'],
+                    ['3D models', 'Racks and servers modelled in Blender to real rack dimensions']
+                ],
+                links: [
+                    ['Walk the demo hall', 'https://sparshika3d.vercel.app/demo'],
+                    ['Sparshika website', 'https://sparshika3d.vercel.app/'],
+                    ['3D frontend code', 'https://github.com/sonitechsolns/sparshika3d']
+                ]
+            }
+        };
+
         function showDemoModal(project) {
             const modal = document.getElementById('demo-modal');
             const modalBox = document.getElementById('modal-box');
             const content = document.getElementById('modal-content');
-            
-            if (modal && modalBox && content) {
-                modal.classList.remove('hidden');
+            const facts = PROJECT_FACTS[project];
+            if (!modal || !modalBox || !content || !facts) return;
 
-                if (project === 'snapnexus') {
-                    modalBox.style.borderColor = 'var(--cyan-brand)';
-                    modalBox.style.boxShadow = '12px 12px 0px var(--cyan-brand)';
-                    content.innerHTML = `
-                        <span class="text-xs font-mono font-bold bg-[#2CC7FF] text-black px-2 py-1 uppercase">LIVE METRICS</span>
-                        <h3 class="text-3xl font-black uppercase mt-3 mb-4">SnapNexus System</h3>
-                        <div class="space-y-3">
-                            <div class="flex justify-between border-b border-zinc-800 pb-2">
-                                <span class="text-zinc-400">Deploy Server Status</span>
-                                <span class="text-[#00FF66] font-mono font-bold">ONLINE</span>
-                            </div>
-                            <div class="flex justify-between border-b border-zinc-800 pb-2">
-                                <span class="text-zinc-400">Database Core (Appwrite)</span>
-                                <span class="text-[#00FF66] font-mono font-bold">CONNECTED</span>
-                            </div>
-                            <div class="flex justify-between border-b border-zinc-800 pb-2">
-                                <span class="text-zinc-400">Total System Visits (28D)</span>
-                                <span class="text-white font-mono font-bold">428</span>
-                            </div>
-                            <div class="flex justify-between pb-2">
-                                <span class="text-zinc-400">Verified Client Outlets</span>
-                                <span class="text-white font-mono font-bold">Surat, Ahmedabad</span>
-                            </div>
-                        </div>
-                    `;
-                } else if (project === 'sparshika') {
-                    modalBox.style.borderColor = 'var(--neon-pink)';
-                    modalBox.style.boxShadow = '12px 12px 0px var(--neon-pink)';
-                    content.innerHTML = `
-                        <span class="text-xs font-mono font-bold bg-[#FF007F] text-white px-2 py-1 uppercase">ARCHIVE METRICS</span>
-                        <h3 class="text-3xl font-black uppercase mt-3 mb-4">Sparshika Engine</h3>
-                        <div class="space-y-3">
-                            <div class="flex justify-between border-b border-zinc-800 pb-2">
-                                <span class="text-zinc-400">Core Network Port</span>
-                                <span class="text-[#FF5E00] font-mono font-bold">ONLINE</span>
-                            </div>
-                            <div class="flex justify-between border-b border-zinc-800 pb-2">
-                                <span class="text-zinc-400">API Gateway Version</span>
-                                <span class="text-white font-mono font-bold">v2.1-Live</span>
-                            </div>
-                            <div class="flex justify-between border-b border-zinc-800 pb-2">
-                                <span class="text-zinc-400">Response Speed Average</span>
-                                <span class="text-white font-mono font-bold">41ms</span>
-                            </div>
-                        </div>
-                    `;
-                }
-            }
+            modalBox.style.borderColor = facts.accent;
+            modalBox.style.boxShadow = `12px 12px 0px ${facts.accent}`;
+            content.innerHTML = `
+                <span class="text-xs font-mono font-bold ${facts.badge} px-2 py-1 uppercase">${facts.label}</span>
+                <h3 class="text-3xl font-black uppercase mt-3 mb-5">${facts.title}</h3>
+                <dl class="space-y-3 text-sm">
+                    ${facts.rows.map(([k, v]) => `
+                        <div class="grid grid-cols-[7.5rem_1fr] gap-3 border-b border-zinc-800 pb-3">
+                            <dt class="text-zinc-500 font-mono text-xs uppercase tracking-wider pt-0.5">${k}</dt>
+                            <dd class="text-zinc-200">${v}</dd>
+                        </div>`).join('')}
+                </dl>
+                <div class="flex flex-wrap gap-x-5 gap-y-2 mt-6">
+                    ${facts.links.map(([t, href]) => `
+                        <a href="${href}" target="_blank" rel="noopener" class="text-sm font-bold uppercase tracking-wider underline underline-offset-4 hover:no-underline" style="color: ${facts.accent}">${t} <i class="fa-solid fa-arrow-up-right-from-square text-xs ml-1"></i></a>`).join('')}
+                </div>
+            `;
+            modal.classList.remove('hidden');
         }
 
         function closeDemoModal() {
             const modal = document.getElementById('demo-modal');
             if (modal) modal.classList.add('hidden');
         }
+
+        // Close pop-ups with Escape or by clicking the dark backdrop
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeDemoModal();
+                if (typeof closeAnnouncementModal === 'function') closeAnnouncementModal();
+            }
+        });
+        document.addEventListener('click', (e) => {
+            if (e.target && (e.target.id === 'demo-modal' || e.target.id === 'announcement-modal')) {
+                e.target.classList.add('hidden');
+            }
+        });
+
+        // The "Add Announcement" button only appears when the page is opened with ?admin
+        document.addEventListener('DOMContentLoaded', () => {
+            if (new URLSearchParams(window.location.search).has('admin')) {
+                document.getElementById('add-announcement-btn')?.classList.remove('hidden');
+            }
+        });
 
         function openAnnouncementModal() {
             const modal = document.getElementById('announcement-modal');
